@@ -1,0 +1,19 @@
+{
+  "include": [
+    "."
+  ],
+  "exclude": [
+    "**/__pycache__",
+    "**/node_modules"
+  ],
+  "reportMissingImports": "none",
+  "reportMissingTypeStubs": false,
+  "reportUnusedImport": false,
+  "reportUnusedClass": false,
+  "reportUnusedFunction": false,
+  "reportUnusedVariable": false,
+  "pythonVersion": "3.12",
+  "typeCheckingMode": "off",
+  "pythonPlatform": "Darwin"
+}
+

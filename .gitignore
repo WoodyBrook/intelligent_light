@@ -1,0 +1,102 @@
+# ============================================
+# Environment variables & Secrets
+# ============================================
+.env
+.env.local
+.env.*
+*.key
+*.pem
+
+# ============================================
+# Python
+# ============================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+env/
+venv/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ============================================
+# IDE & Editor
+# ============================================
+.vscode/
+.idea/
+.cursor/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# ============================================
+# Testing & Coverage
+# ============================================
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+*.cover
+*.log
+
+# ============================================
+# OS Files
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.tmp
+
+# ============================================
+# Project Specific
+# ============================================
+# 用户状态和持久化数据
+data/
+chroma_db/
+*.db
+*.sqlite
+*.sqlite3
+
+# 日志文件
+logs/
+
+# 临时文件
+tmp/
+temp/
+*.bak
+*.backup

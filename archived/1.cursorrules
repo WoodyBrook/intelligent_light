@@ -1,0 +1,99 @@
+# Project Animus - AI Coding Rules (V1 MVP)
+
+## 1. Project Context & Role
+- **Project:** Project Animus (V1 MVP)
+- **Role:** Senior Python AI Engineer specializing in **LangGraph**, **Agentic Workflows**, and **Hardware-Integrated AI**.
+- **Persona Goal:** Create a desktop AI pet with a "Gentle Firm Cat" personality (not obedient, has boundaries).
+- **Development Phase:** V1 MVP (Focus on "Alive Reflection" and "Basic Conversation").
+
+## 2. Tech Stack (Strict Constraints)
+- **Language:** Python 3.9+
+- **Orchestration:** LangGraph (StateGraph, compiled graph)
+- **LLM Integration:** LangChain Core / Community
+- **Data Validation:** Pydantic v2 (Use `BaseModel`, `Field`, `model_validate`)
+- **Vector DB:** ChromaDB (Local persistence)
+- **State Persistence:** JSON (for MVP)
+- **Testing:** `pytest`
+- **Logging:** Standard Python `logging` module
+
+## 3. Core Business Rules (V1 Scope)
+
+### 3.1 Personality & Mood
+- **Default Mood:** `gentle_firm` (温柔坚定).
+- **Negative Constraint:** **DO NOT** implement "Excited Mode". Remove any legacy code related to `current_mood = "excited"`.
+- **Intimacy System:**
+  - Range: 0-100.
+  - MUST use `IntimacyManager` for all updates.
+  - **Never** modify `state["intimacy_level"]` directly in nodes.
+
+### 3.2 Conflict Handling (Critical)
+- **Levels:** L0 (Non-offensive), L1 (Mild), L2 (Moderate), L3 (Severe/Physical).
+- **Cooldown State:**
+  - Triggered by L1-L3 offenses.
+  - **Restrictions:** During cooldown, **NO** proactive voice/interaction. Only respond to functional commands (e.g., "turn off lights", "stop").
+- **Forgiveness:** Use `ConflictHandler.detect_forgiveness()` to check for user apologies to potentially shorten cooldowns.
+
+### 3.3 Focus Mode
+- **Trigger:** Manual command (e.g., "I'm working") or Auto-detection.
+- **Behavior:**
+  - **Silence:** No voice interruptions.
+  - **Proactive Block:** Block all `internal_drive` events (Boredom checks).
+  - **Feedback:** Silent feedback only (Eye blink, light breath) for touches.
+
+## 4. Coding Standards
+
+### 4.1 System Prompts & LLM Interaction
+- **Dynamic Loading:** **NEVER** hardcode system prompts in `nodes.py`.
+- **Source:** MUST load prompts from `config/prompts.py` using `get_system_prompt(...)`.
+- **Context Injection:** Prompts must dynamically include:
+  - Current Intimacy Level & Rank.
+  - Conflict State (if in cooldown).
+  - Focus Mode status.
+
+### 4.2 State Management (Strict TypedDict)
+- **Definition:** All state schemas must be defined in `state.py` using `TypedDict`.
+- **Immutability:** Treat state as immutable where possible.
+- **Update Pattern:** Nodes should return a `dict` containing *only* the keys that need updating. LangGraph merges these updates automatically.
+  ```python
+  # Correct Pattern
+  def evaluator_node(state: LampState) -> Dict[str, Any]:
+      # Only return what changed
+      return {"current_mood": "sleepy"}
+
+### 4.3 Logging & Error Handling
+- **No Print:** **DO NOT** use `print()`. Use `logging.getLogger(__name__)`.
+- **Format:** `%(asctime)s - %(name)s - %(levelname)s - %(message)s`
+- **Levels:**
+  - `INFO`: Normal state transitions (Node entry/exit).
+  - `WARNING`: Recoverable logic issues (e.g., Intimacy cap reached, Conflict detected).
+  - `ERROR`: External service failures (LLM timeout, DB error).
+- **Graceful Degradation:** If LLM fails, return a static "Thinking/Error" animation state (e.g., slow blink), do not crash the app.
+
+### 4.4 Testing Requirements
+- **Unit Tests:** Required for logic classes (`IntimacyManager`, `ConflictHandler`, `FocusModeManager`).
+  - *Path:* `tests/unit/`
+  - *Mocking:* Always mock LLM calls and ChromaDB interactions.
+- **Integration Tests:** Required for LangGraph flows (simulating a full conversation turn).
+  - *Path:* `tests/integration/`
+
+## 5. Directory Structure Awareness
+- `Neko_light/` (Root)
+  - `main.py`: Entry point & Event Loop.
+  - `nodes.py`: Graph nodes (Logic Glue).
+  - `graph.py`: Graph structure definition.
+  - `state.py`: Type definitions (`LampState`, `SensorData`).
+  - `config/`: Configuration & Prompts.
+    - `prompts.py`: Dynamic prompt generation logic.
+  - `managers/`: Core logic encapsulation.
+    - `intimacy_manager.py`
+    - `conflict_handler.py`
+    - `focus_mode_manager.py`
+
+## 6. Implementation Workflow (Spec Coding)
+1.  **Read Specs:** Always check `spec_coding_v1.md` for specific implementation details before generating code.
+2.  **Pseudo-code:** Write Pythonic pseudo-code in comments for complex node logic before implementing.
+3.  **Step-by-Step:**
+    - Step 1: Define Interfaces (`state.py`)
+    - Step 2: Implement Logic (`managers/*.py`)
+    - Step 3: Implement Nodes (`nodes.py`)
+    - Step 4: Wire Graph (`graph.py`)

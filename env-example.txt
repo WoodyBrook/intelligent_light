@@ -1,0 +1,26 @@
+# 环境变量配置示例文件
+# 复制此文件内容到你的 .env 文件中，并填入实际的 API Key
+# cp env-example.txt .env
+
+# === 和风天气配置 (必需) ===
+# 1. API Key: 从 https://console.qweather.com/ 获取
+QWEATHER_API_KEY=your_api_key_here
+
+# 2. API Host: 您专属的 API 域名（新版服务必需）
+#    查看位置：控制台 -> 项目管理 -> 您的项目 -> API Host
+#    格式示例: abcxyz.qweatherapi.com
+#    (如果不填，默认使用免费版域名 devapi.qweather.com，可能导致 403/404 错误)
+QWEATHER_API_HOST=devapi.qweather.com
+
+# === 字节火山引擎配置 ===
+# 从 https://console.volcengine.com/ 获取
+VOLCENGINE_API_KEY=your-actual-api-key-here
+
+# === 网络搜索配置 (可选) ===
+# 百度智能云AI搜索API（国内服务，访问稳定，每日免费100次）
+# 从 https://cloud.baidu.com/ 获取
+# 获取方式：登录百度智能云 -> 千帆平台 -> 创建应用 -> 获取 API Key
+BAIDU_SEARCH_API_KEY=your-baidu-search-api-key-here
+
+# === 向量数据库配置 (可选) ===
+# VECTOR_DB_PATH=./chroma_db_actions

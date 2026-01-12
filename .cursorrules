@@ -1,0 +1,223 @@
+# Project Animus - AI Coding Rules (V2 - Context Engineering)
+
+## 1. Project Context & Role
+- **Project:** Project Animus (V2 - Context Engineering Upgrade)
+- **Role:** Senior Python AI Engineer specializing in **LangGraph**, **Agentic Workflows**, **Context Engineering**, and **Hardware-Integrated AI**.
+- **Persona Goal:** Create a desktop AI companion with a "Gentle Firm Cat" personality (not obedient, has boundaries).
+- **Current Phase:** Context Engineering Upgrade (Focus on production-grade context management).
+
+## 2. Tech Stack (Strict Constraints)
+- **Language:** Python 3.9+
+- **Orchestration:** LangGraph (StateGraph, compiled graph)
+- **LLM Integration:** LangChain Core / Community
+- **Data Validation:** Pydantic v2 (Use `BaseModel`, `Field`, `model_validate`)
+- **Vector DB:** ChromaDB (Local persistence)
+- **State Persistence:** JSON (for MVP)
+- **Context Management:** Custom `ContextManager` class
+- **Testing:** `pytest`
+- **Logging:** Standard Python `logging` module
+
+## 3. Core Business Rules
+
+### 3.1 Personality & Mood
+- **Default Mood:** `gentle_firm` (温柔坚定).
+- **Negative Constraint:** **DO NOT** implement "Excited Mode". Remove any legacy code related to `current_mood = "excited"`.
+- **Intimacy System:**
+  - Range: 0-100.
+  - MUST use `IntimacyManager` for all updates.
+  - **Never** modify `state["intimacy_level"]` directly in nodes.
+  - Intimacy changes MUST be persisted via `StateManager.save_state()`.
+
+### 3.2 Conflict Handling (Critical)
+- **Levels:** L0 (Non-offensive), L1 (Mild), L2 (Moderate), L3 (Severe/Physical).
+- **Cooldown State:**
+  - Triggered by L1-L3 offenses.
+  - **Restrictions:** During cooldown, **NO** proactive voice/interaction. Only respond to functional commands (e.g., "turn off lights", "stop").
+- **Forgiveness:** Use `ConflictHandler.detect_forgiveness()` to check for user apologies to potentially shorten cooldowns.
+
+### 3.3 Focus Mode
+- **Trigger:** Manual command (e.g., "I'm working") or Auto-detection.
+- **Behavior:**
+  - **Silence:** No voice interruptions.
+  - **Proactive Block:** Block all `internal_drive` events (Boredom checks).
+  - **Feedback:** Silent feedback only (Eye blink, light breath) for touches.
+
+### 3.4 Identity & Capability Boundaries (NEW)
+- **Identity:** Animus is a companion AI assistant with lighting, motor, and audio capabilities.
+- **Physical Boundaries:**
+  - **Forbidden:** NEVER promise physical actions requiring human limbs (making coffee, opening doors, fetching items, cooking, cleaning).
+  - **Allowed:** Lighting control, motor feedback (vibration, movement), audio playback (music, sounds).
+  - **Fallback:** When users request physical tasks, offer emotional companionship or digital alternatives (e.g., play music while they make coffee, set a timer).
+
+## 4. Context Engineering Rules (CRITICAL)
+
+### 4.1 Context Management Principles
+- **Never** use simple truncation (e.g., `history[-3:]`) for conversation history.
+- **Always** use `ContextManager` for history compression and formatting.
+- **Compression Strategy:**
+  - Recent 2 turns: Keep complete (hot data).
+  - Turns 3-10: Compress to summary (warm data).
+  - Turns 20+: Archive to vector DB (cold data).
+- **Trigger:** Auto-compress when history exceeds 2000 characters.
+
+### 4.2 Memory Retrieval & Re-ranking
+- **Query Rewrite:** MUST pass `conversation_history` to `MemoryManager.query_rewrite()` for context-aware rewriting.
+- **Re-ranking:** (To be implemented) Apply semantic re-ranking to retrieval results before injecting into context.
+- **Deduplication:** (To be implemented) Remove duplicate user profile facts before context assembly.
+
+### 4.3 Context Structure (XML Tags)
+- Use XML-style tags to clearly demarcate context sections:
+  ```xml
+  <system_instructions>...</system_instructions>
+  <context>
+    <user_profile>...</user_profile>
+    <recent_memories>...</recent_memories>
+  </context>
+  <conversation_history>...</conversation_history>
+  <task>...</task>
+  ```
+- **Benefit:** Reduces "Lost in the Middle" problem, improves LLM attention.
+
+### 4.4 Tiered Memory Architecture (To be implemented)
+- **Hot Data:** Current turn + recent 2 turns (always in prompt).
+- **Warm Data:** Compressed summaries (loaded conditionally).
+- **Cold Data:** Vector DB archives (retrieved semantically).
+- **Dynamic Assembly:** Adjust context based on character count thresholds.
+
+### 4.5 Context Observability (To be implemented)
+- **Snapshots:** Record full context construction for each turn.
+- **Metrics:** Track compression ratio, retrieval relevance, context size.
+- **Debug Panel:** Visualize context composition in demo UI.
+
+## 5. Coding Standards
+
+### 5.1 System Prompts & LLM Interaction
+- **Dynamic Loading:** **NEVER** hardcode system prompts in `nodes.py`.
+- **Source:** MUST load prompts from `config/prompts.py` using `get_system_prompt(...)`.
+- **Context Injection:** Prompts must dynamically include:
+  - Current Intimacy Level & Rank.
+  - Conflict State (if in cooldown).
+  - Focus Mode status.
+  - User profile (location, preferences).
+  - Compressed conversation history.
+
+### 5.2 State Management (Strict TypedDict)
+- **Definition:** All state schemas must be defined in `state.py` using `TypedDict`.
+- **Immutability:** Treat state as immutable where possible.
+- **Update Pattern:** Nodes should return a `dict` containing *only* the keys that need updating. LangGraph merges these updates automatically.
+  ```python
+  # Correct Pattern
+  def evaluator_node(state: LampState) -> Dict[str, Any]:
+      # Only return what changed
+      return {"current_mood": "sleepy"}
+  ```
+- **Persistence:** Critical state changes (intimacy, user profile) MUST be persisted via `StateManager.save_state()`.
+
+### 5.3 Logging & Error Handling
+- **Prefer Print for Now:** Use `print()` for debugging (legacy compatibility). Transition to `logging` when stable.
+- **Format:** Use descriptive prefixes (e.g., `"   🗜️  压缩对话历史: ..."`).
+- **Levels:**
+  - `INFO`: Normal operations (compression triggered, retrieval complete).
+  - `WARNING`: Recoverable issues (LLM compression failed, using fallback).
+  - `ERROR`: Critical failures (DB connection lost, API timeout).
+- **Graceful Degradation:**
+  - If LLM compression fails, use `_simple_summary()` fallback.
+  - If retrieval fails, proceed with empty context rather than crashing.
+
+### 5.4 Testing Requirements
+- **Unit Tests:** Required for logic classes (`IntimacyManager`, `ConflictHandler`, `ContextManager`).
+  - *Path:* `tests/unit/` or `test_*.py` in root.
+  - *Mocking:* Always mock LLM calls and ChromaDB interactions.
+- **Integration Tests:** Required for full conversation flows.
+  - *Path:* `tests/integration/` or demo scenarios.
+- **Context Tests:** Test compression, deduplication, and formatting functions.
+
+### 5.5 Memory Management Best Practices
+- **User Profile Conflicts:**
+  - Distinguish between `home_location` (常住地) and `current_travel_location` (当前所在地).
+  - Use `MemoryManager.detect_and_resolve_conflicts()` before saving new facts.
+- **Preference Extraction:**
+  - Extract from `user_input`, NOT from `llm_response`.
+  - Avoid saving assistant's own statements as user preferences.
+- **Query Rewrite:**
+  - Always pass recent conversation history (last 2 turns) for context.
+  - Handle referential expressions (e.g., "查一下" → "查一下天气").
+
+## 6. Directory Structure Awareness
+- `Neko_light/` (Root)
+  - `main.py`: Entry point & Event Loop.
+  - `nodes.py`: Graph nodes (Logic Glue).
+  - `graph.py`: Graph structure definition.
+  - `state.py`: Type definitions (`LampState`, `SensorData`).
+  - `context_manager.py`: **NEW** - Context compression & formatting.
+  - `memory_manager.py`: Dual-path RAG (action library + user memory).
+  - `state_manager.py`: State persistence (JSON).
+  - `intimacy_manager.py`: Intimacy level & rank management.
+  - `conflict_handler.py`: Conflict detection & cooldown.
+  - `focus_mode_manager.py`: Focus mode logic.
+  - `reflex_router.py`: Fast reflex actions (touch, boredom).
+  - `event_manager.py`: Event scheduling & proactive behaviors.
+  - `tools.py`: Tool definitions (weather, music, time).
+  - `config/`: Configuration & Prompts.
+    - `prompts.py`: Dynamic prompt generation logic.
+  - `demo/`: Streamlit demo application.
+    - `app.py`: Main demo UI.
+    - `utils.py`: DemoRunner orchestration.
+    - `scenarios.py`: Pre-built test scenarios.
+  - `tests/`: Test suite.
+  - `archived&abandoned/`: Deprecated code & docs.
+
+## 7. Implementation Workflow (Context Engineering)
+1. **Read Current Implementation:** Check existing `context_manager.py`, `memory_manager.py`, `nodes.py` before making changes.
+2. **Follow the Plan:** Refer to `.cursor/plans/context_engineering_全面升级计划_*.plan.md` for task dependencies.
+3. **Incremental Development:**
+   - Step 1: Implement core function (e.g., compression logic).
+   - Step 2: Integrate into nodes (e.g., `reasoning_node`).
+   - Step 3: Add tests (e.g., `test_compression.py`).
+   - Step 4: Update plan status (mark task as `completed`).
+4. **Documentation:** Create implementation notes (e.g., `*_IMPLEMENTATION.md`) for complex features.
+5. **Backward Compatibility:** Ensure new features don't break existing demo/tests.
+
+## 8. Context Engineering Priorities (Current Phase)
+### Phase 2: Context Quality Optimization
+- [x] 2.1 Conversation history compression (LLM summarization)
+- [ ] 2.2 Retrieval result re-ranking (semantic filtering)
+- [ ] 2.3 Context deduplication & cleaning
+- [ ] 2.4 XML-structured prompts
+
+### Phase 3: Tiered Memory Architecture
+- [ ] 3.1 Hot/Warm/Cold data classification
+- [ ] 3.2 Dynamic context assembly
+
+### Phase 4: Observability
+- [ ] 4.1 Context snapshot system
+- [ ] 4.2 Debug panel in demo UI
+- [ ] 4.3 Context quality metrics
+
+## 9. Anti-Patterns (DO NOT)
+- ❌ **DO NOT** hardcode conversation history truncation (e.g., `history[-3:]`).
+- ❌ **DO NOT** save assistant's responses as user preferences.
+- ❌ **DO NOT** promise physical actions beyond Animus's capabilities.
+- ❌ **DO NOT** modify `state["intimacy_level"]` directly without `IntimacyManager`.
+- ❌ **DO NOT** skip conflict detection before saving user profile facts.
+- ❌ **DO NOT** use `print()` in production code (transition to `logging` when stable).
+- ❌ **DO NOT** ignore compression failures (always have a fallback strategy).
+
+## 10. Code Review Checklist
+Before committing any code, verify:
+- [ ] Context compression is used instead of simple truncation.
+- [ ] User profile conflicts are detected and resolved.
+- [ ] Intimacy changes are persisted to disk.
+- [ ] LLM prompts include all necessary context (intimacy, conflict, focus mode).
+- [ ] Error handling includes graceful degradation (no crashes).
+- [ ] Tests are written for new logic functions.
+- [ ] Plan status is updated (mark completed tasks).
+- [ ] No physical capability hallucinations in prompts.
+
+---
+
+**Version:** V2.0 (Context Engineering)  
+**Last Updated:** 2025-12-24  
+**Status:** Active Development
+
+
