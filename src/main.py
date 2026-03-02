@@ -32,12 +32,12 @@ def main():
     signal.signal(signal.SIGTERM, signal_handler)
 
     print("=" * 60)
-    print("🤖 智能台灯系统 (Neko-Light V1) 启动")
-    print("🚀 进入 OODA 事件循环模式")
+    print("智能台灯系统 (Neko-Light V1) 启动")
+    print("进入 OODA 事件循环模式")
     print("=" * 60)
 
     # 初始化组件
-    print("🔧 初始化组件...")
+    print("初始化组件...")
     event_manager = EventManager()
     state_manager = StateManager()
     app = build_graph()
@@ -76,20 +76,32 @@ def main():
         # 奖励发放后，如果需要可以在这里重置时长，或者由intimacy_manager的每日重置逻辑处理
         # PRD要求 >1小时奖励，通常是每天一次。
     
-    print("✅ 所有管理器初始化完成")
+    print("所有管理器初始化完成")
 
     # 初始化状态
     current_state = state_manager.initialize_state()
 
+    # V1.6: 启动时运行模式扫描 (System 2 后台任务)
+    try:
+        from .pattern_scanner import scan_and_consolidate_patterns
+        print("正在启动后台模式扫描...")
+        scan_result = scan_and_consolidate_patterns()
+        if scan_result['patterns_found'] > 0:
+            print(f"   检测到 {scan_result['patterns_found']} 个行为规律，已更新 {scan_result['patterns_added_to_profile']} 个到用户画像")
+        else:
+            print("   模式扫描完成，暂无新规律")
+    except Exception as e:
+        print(f"[WARN] 模式扫描启动失败: {e}")
+
     # 显示初始状态摘要
     summary = state_manager.get_state_summary(current_state)
-    print("📊 初始状态:")
+    print("初始状态:")
     print(f"   - 用户: {summary['user_name']}")
     print(f"   - 情绪: {summary['current_mood']} | 能量: {summary['energy_level']}")
-    print(f"   - 无聊度: {summary['boredom']} | 活动状态: {summary['activity_level']}")
-    print(".1f")
-    print("\n🎤 请输入您的指令，然后按 Enter 键确认：")
-    print("   💡 示例：'你好'、'今天天气怎么样'、'我饿了'")
+    print(f"   - 无聊度: {summary['boredom']} | 好奇度: {summary.get('curiosity', 0)}")
+    print(f"   - 关心度: {summary.get('care', 0)} | 分享欲: {summary.get('sharing', 0)} | 担忧度: {summary.get('worry', 0)}")
+    print("\n请输入您的指令，然后按 Enter 键确认：")
+    print("   示例：'你好'、'今天天气怎么样'、'我饿了'")
     print("   ⏳ 请完整输入后按 Enter，或等待系统主动发起对话")
 
     # OODA 事件循环
@@ -116,7 +128,7 @@ def main():
             if event:
                 reflex = reflex_router.route(event, current_state)
                 if reflex.triggered:
-                    print(f"   ⚡ 反射触发: {reflex.command_type or 'unnamed'}")
+                    print(f"   反射触发: {reflex.command_type or 'unnamed'}")
                     
                     # 执行反射动作
                     if reflex.voice_content:
@@ -170,12 +182,12 @@ def main():
                             auto=False
                         )
                         current_state.update(focus_updates)
-                        print(f"   🔇 用户开启专注模式")
+                        print(f"   用户开启专注模式")
                     
                     elif focus_mode_manager.should_exit_focus_mode(user_input_text, current_state):
                         focus_updates = focus_mode_manager.exit_focus_mode(current_state)
                         current_state.update(focus_updates)
-                        print(f"   🔊 用户关闭专注模式")
+                        print(f"   用户关闭专注模式")
 
             # 3. 决策 (Decide) - 判断是否需要触发工作流
             should_trigger = False
@@ -233,7 +245,7 @@ def main():
 
             # 4. 行动 (Act) - 执行工作流
             if should_trigger:
-                print(f"⚡ 触发工作流 (原因: {trigger_reason})")
+                print(f"触发工作流 (原因: {trigger_reason})")
 
                 # 重置性能追踪器，开始新一轮追踪
                 perf_tracker = get_tracker()
@@ -244,7 +256,7 @@ def main():
 
                 try:
                     # 执行工作流
-                    print("   🔄 执行中...")
+                    print("   执行中...")
                     result = app.invoke(workflow_input)
 
                     # 提取本次执行的输出（只在本次使用）
@@ -290,11 +302,11 @@ def main():
                     if "conflict_state" in result:
                         current_state["conflict_state"] = result["conflict_state"]
                         if result["conflict_state"] is None:
-                            print("   ✨ 冲突状态已清除")
+                            print("   冲突状态已清除")
 
                     # 确保历史记录被正确保存
                     if "history" in current_state:
-                        print(f"   📝 当前对话历史: {len(current_state['history'])} 条记录")
+                        print(f"   当前对话历史: {len(current_state['history'])} 条记录")
 
                     # 清空临时字段，避免污染
                     current_state["voice_content"] = None
@@ -310,18 +322,20 @@ def main():
                         current_state["sensor_data"] = {}
 
                 except Exception as e:
-                    print(f"   ❌ 工作流执行失败: {e}")
+                    print(f"[ERROR] 工作流执行失败: {e}")
                     # 继续循环，不中断程序
 
-                print(f"   ✅ 工作流执行完成 (循环 #{loop_count})")
+                print(f"   工作流执行完成 (循环 #{loop_count})")
 
             # === OODA 循环结束 ===
 
             # 显示定期状态摘要（每10次循环）
             if loop_count % 10 == 0:
                 summary = state_manager.get_state_summary(current_state)
-                print(f"📊 状态摘要 (循环 #{loop_count}):")
+                print(f"状态摘要 (循环 #{loop_count}):")
                 print(f"   - 无聊度: {summary['boredom']} | 能量: {summary['energy']}")
+                print(f"   - 好奇度: {summary.get('curiosity', 0)} | 关心度: {summary.get('care', 0)}")
+                print(f"   - 分享欲: {summary.get('sharing', 0)} | 担忧度: {summary.get('worry', 0)}")
                 print(f"   - 活动: {summary['activity_level']} | 离开时长: {summary['absence_duration_minutes']}分钟")
 
             # 休眠 - 防止 CPU 占用过高，并给用户输入时间
@@ -335,18 +349,26 @@ def main():
         except KeyboardInterrupt:
             break
         except Exception as e:
-            print(f"❌ 循环中发生错误: {e}")
+            print(f"[ERROR] 循环中发生错误: {e}")
             time.sleep(1)  # 错误时稍微多休眠
 
     # 程序退出
     print("\n" + "=" * 60)
     print("👋 Neko-Light V1 已关闭")
 
+    # 强制刷新 BM25 索引（确保待刷新记忆被索引）
+    try:
+        from .memory_manager import get_memory_manager
+        memory_manager = get_memory_manager()
+        memory_manager.force_refresh_bm25()
+    except Exception as e:
+        print(f"[WARN] BM25强制刷新失败: {e}")
+
     # 保存最终状态
     state_manager.save_state(current_state)
 
     summary = state_manager.get_state_summary(current_state)
-    print("📊 最终状态:")
+    print("最终状态:")
     print(f"   - 运行循环数: {loop_count}")
     print(f"   - 无聊度: {summary['boredom']}")
     print(f"   - 能量值: {summary['energy']}")

@@ -16,7 +16,7 @@ except ImportError:
     StdioServerParameters = None
     stdio_client = None
     MCP_AVAILABLE = False
-    logging.warning("⚠️ MCP 库未安装，MCP 相关功能将不可用。安装命令: pip install mcp")
+    logging.warning("[WARN] MCP 库未安装，MCP 相关功能将不可用。安装命令: pip install mcp")
 
 # 可选导入 OAuth 相关库
 try:
@@ -25,7 +25,7 @@ try:
 except ImportError:
     OAuth2Session = None
     OAUTH_AVAILABLE = False
-    logging.warning("⚠️ authlib 库未安装，OAuth 相关功能将不可用。安装命令: pip install authlib")
+    logging.warning("[WARN] authlib 库未安装，OAuth 相关功能将不可用。安装命令: pip install authlib")
 
 from .email_providers import create_email_provider, EmailProvider
 from .content_providers import create_music_recommender, create_news_aggregator, MusicRecommender, NewsAggregator
@@ -81,7 +81,7 @@ class MCPManager:
         添加本地 stdio MCP Server 连接 (Task 1.1)
         """
         if not MCP_AVAILABLE:
-            logger.warning(f"⚠️ MCP 库未安装，无法添加 stdio server: {server_name}")
+            logger.warning(f"[WARN] MCP 库未安装，无法添加 stdio server: {server_name}")
             logger.warning("   请运行: pip install mcp")
             return
         
@@ -111,7 +111,7 @@ class MCPManager:
             )
             logger.info(f"  已注册工具: {tool.name} (来自 {server_name})")
         
-        logger.info(f"✅ stdio MCP Server {server_name} 连接成功")
+        logger.info(f"stdio MCP Server {server_name} 连接成功")
 
     def setup_oauth_client(self, server_name: str, client_id: str, client_secret: str, 
                           auth_url: str, token_url: str, scopes: List[str]):
@@ -165,7 +165,7 @@ class MCPManager:
         
         self.tokens[server_name] = token
         self._save_tokens()
-        logger.info(f"✅ 已获取并保存 {server_name} 的 Token")
+        logger.info(f"已获取并保存 {server_name} 的 Token")
         return token
 
     def refresh_token(self, server_name: str):
@@ -188,7 +188,7 @@ class MCPManager:
         
         self.tokens[server_name] = new_token
         self._save_tokens()
-        logger.info(f"✅ 已刷新 {server_name} 的 Token")
+        logger.info(f"已刷新 {server_name} 的 Token")
         return new_token
 
     def get_token(self, server_name: str):
@@ -215,7 +215,7 @@ class MCPManager:
         
         if provider.connect():
             self.email_providers[provider_name] = provider
-            logger.info(f"✅ 已添加邮箱提供商: {provider_name} ({provider_type})")
+            logger.info(f"已添加邮箱提供商: {provider_name} ({provider_type})")
             
             # 保存配置（不保存密码，只保存用户名）
             if "email_configs" not in self.tokens:
@@ -228,7 +228,7 @@ class MCPManager:
             self._save_tokens()
             return True
         else:
-            logger.error(f"❌ 连接邮箱提供商失败: {provider_name}")
+            logger.error(f"[ERROR] 连接邮箱提供商失败: {provider_name}")
             return False
 
     def remove_email_provider(self, provider_name: str):
@@ -269,7 +269,7 @@ class MCPManager:
         """
         if not self.music_recommender:
             self.music_recommender = create_music_recommender()
-            logger.info("✅ 音乐推荐器已初始化")
+            logger.info("音乐推荐器已初始化")
         return self.music_recommender
 
     def recommend_music_by_mood(self, mood: str, user_preferences: Optional[List[str]] = None):
@@ -289,7 +289,7 @@ class MCPManager:
             self.news_aggregator = create_news_aggregator()
             if user_interests:
                 self.news_aggregator.set_user_interests(user_interests)
-            logger.info("✅ 新闻聚合器已初始化")
+            logger.info("新闻聚合器已初始化")
         return self.news_aggregator
 
     def add_news_feed(self, category: str, feed_url: str):

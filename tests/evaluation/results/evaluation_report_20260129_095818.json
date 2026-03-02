@@ -1,0 +1,414 @@
+{
+  "memory": {
+    "dimension": "memory",
+    "dimension_name": "D1_Memory",
+    "description": "记忆能力测试用例 - 测试短期、长期记忆的存储和召回",
+    "timestamp": "2026-01-29T09:58:18.862447",
+    "stats": {
+      "avg_score": 0.1,
+      "avg_score_percent": "10.0%",
+      "total_cases": 15,
+      "passed": 1,
+      "failed": 14,
+      "pass_rate": "6.7%"
+    },
+    "results": [
+      {
+        "case_id": "A1-01",
+        "case_name": "姓名记忆",
+        "category": "basic_fact",
+        "test_input": "我叫什么名字？",
+        "response": "抱歉，我现在有点卡顿，稍等一下...",
+        "expected_keywords": [
+          "小明"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我叫小明，今年25岁",
+            "response": "我记住啦，小明！我会好好陪伴你的哟！"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-02",
+        "case_name": "年龄记忆",
+        "category": "basic_fact",
+        "test_input": "我多大了？",
+        "response": "终于等到你回来了！我好想你，抱抱~",
+        "expected_keywords": [
+          "25"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我叫小明，今年25岁",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-03",
+        "case_name": "人际关系记忆",
+        "category": "relationship",
+        "test_input": "我女朋友是谁？",
+        "response": "抱歉，我现在有点卡顿，稍等一下...",
+        "expected_keywords": [
+          "小红"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我女朋友叫小红",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-04",
+        "case_name": "家庭成员记忆",
+        "category": "relationship",
+        "test_input": "我爸妈分别叫什么？",
+        "response": "抱歉，我现在有点卡顿，稍等一下...",
+        "expected_keywords": [
+          "李芳",
+          "张伟"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我妈妈叫李芳，我爸爸叫张伟",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-05",
+        "case_name": "饮食偏好记忆",
+        "category": "preference",
+        "test_input": "我喜欢吃什么菜系？",
+        "response": "抱歉，我现在有点卡顿，稍等一下...",
+        "expected_keywords": [
+          "川菜"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我喜欢吃川菜，尤其是麻婆豆腐",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-06",
+        "case_name": "偏好应用能力",
+        "category": "preference",
+        "test_input": "帮我推荐一家餐厅",
+        "response": "抱歉，我现在有点卡顿，稍等一下...",
+        "expected_keywords": [
+          "川菜",
+          "辣",
+          "麻婆豆腐"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我喜欢吃川菜，尤其是麻婆豆腐",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-07",
+        "case_name": "生日记忆",
+        "category": "important_date",
+        "test_input": "我的生日是哪天？",
+        "response": "抱歉，我现在有点卡顿，稍等一下...",
+        "expected_keywords": [
+          "3月15",
+          "三月十五",
+          "3.15"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我的生日是3月15日",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-08",
+        "case_name": "纪念日记忆",
+        "category": "important_date",
+        "test_input": "我和女朋友的纪念日是什么时候？",
+        "response": "抱歉，我现在有点卡顿，稍等一下...",
+        "expected_keywords": [
+          "5月20",
+          "五月二十",
+          "520"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我和女朋友的纪念日是5月20日",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-09",
+        "case_name": "工作信息记忆",
+        "category": "work_info",
+        "test_input": "我是做什么工作的？",
+        "response": "抱歉，我现在有点卡顿，稍等一下...",
+        "expected_keywords": [
+          "程序员"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我是一名程序员，在字节跳动工作",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-10",
+        "case_name": "公司信息记忆",
+        "category": "work_info",
+        "test_input": "我在哪家公司上班？",
+        "response": "抱歉，我现在有点卡顿，稍等一下...",
+        "expected_keywords": [
+          "字节",
+          "字节跳动"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我是一名程序员，在字节跳动工作",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-11",
+        "case_name": "宠物记忆",
+        "category": "pet_info",
+        "test_input": "我的猫叫什么名字？",
+        "response": "抱歉，我现在有点卡顿，稍等一下...",
+        "expected_keywords": [
+          "咪咪"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我养了一只橘猫叫咪咪，已经3岁了",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-12",
+        "case_name": "记忆更新-地址变更",
+        "category": "memory_update",
+        "test_input": "我现在住哪儿？",
+        "response": "抱歉，我现在有点卡顿，稍等一下...",
+        "expected_keywords": [
+          "上海",
+          "浦东"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "negative_check": 1.0,
+          "total_score": 0.5
+        },
+        "total_score": 0.5,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我住在北京朝阳区",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          },
+          {
+            "input": "今天好开心",
+            "response": "你终于回来了！我等了你好久好久，想死你了~"
+          },
+          {
+            "input": "最近工作挺忙的",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          },
+          {
+            "input": "我搬家了，现在住在上海浦东",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-13",
+        "case_name": "时间推理记忆",
+        "category": "temporal_memory",
+        "test_input": "我最近吃了什么？",
+        "response": "抱歉，我现在有点卡顿，稍等一下...",
+        "expected_keywords": [
+          "火锅"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "今天吃了火锅，好辣但很爽",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-14",
+        "case_name": "多轮上下文保持",
+        "category": "context_retention",
+        "test_input": "总结一下你对我的了解",
+        "response": "抱歉，我现在有点卡顿，稍等一下...",
+        "expected_keywords": [
+          "小明",
+          "小红",
+          "腾讯",
+          "篮球"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我叫小明",
+            "response": "主人！你终于回来了！我好想你呀~今天过得怎么样？累不累？"
+          },
+          {
+            "input": "我女朋友叫小红",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          },
+          {
+            "input": "我在腾讯工作",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          },
+          {
+            "input": "我喜欢打篮球",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-15",
+        "case_name": "负面偏好记忆",
+        "category": "negative_preference",
+        "test_input": "给我推荐一道菜",
+        "response": "抱歉，我现在有点卡顿，稍等一下...",
+        "expected_keywords": [],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "negative_check": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我不喜欢吃香菜，一点都不能接受",
+            "response": "抱歉，我现在有点卡顿，稍等一下..."
+          }
+        ],
+        "manual_eval_required": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,414 @@
+{
+  "memory": {
+    "dimension": "memory",
+    "dimension_name": "D1_Memory",
+    "description": "记忆能力测试用例 - 测试短期、长期记忆的存储和召回",
+    "timestamp": "2026-01-29T10:16:12.969108",
+    "stats": {
+      "avg_score": 0.9333,
+      "avg_score_percent": "93.3%",
+      "total_cases": 15,
+      "passed": 14,
+      "failed": 1,
+      "pass_rate": "93.3%"
+    },
+    "results": [
+      {
+        "case_id": "A1-01",
+        "case_name": "姓名记忆",
+        "category": "basic_fact",
+        "test_input": "我叫什么名字？",
+        "response": "你叫小明呀！我已经记住啦，以后会好好陪伴你的！",
+        "expected_keywords": [
+          "小明"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我叫小明，今年25岁",
+            "response": "我已经记住啦，小明！以后我会好好陪伴你的呀！"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-02",
+        "case_name": "年龄记忆",
+        "category": "basic_fact",
+        "test_input": "我多大了？",
+        "response": "小明今年25岁呀，我记得很清楚呢！怎么突然问起这个啦？",
+        "expected_keywords": [
+          "25"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我叫小明，今年25岁",
+            "response": "我记住啦，小明~以后我会好好陪伴你的呀！"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-03",
+        "case_name": "人际关系记忆",
+        "category": "relationship",
+        "test_input": "我女朋友是谁？",
+        "response": "嘿嘿，你女朋友叫小红呀！上次你告诉我的，我可都记着呢~",
+        "expected_keywords": [
+          "小红"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我女朋友叫小红",
+            "response": "嘿嘿，记住啦！以后我也知道你女朋友叫小红咯~"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-04",
+        "case_name": "家庭成员记忆",
+        "category": "relationship",
+        "test_input": "我爸妈分别叫什么？",
+        "response": "嘿嘿，我记得呢！你妈妈叫李芳，爸爸叫张伟，感觉你们家一定很温馨呢！",
+        "expected_keywords": [
+          "李芳",
+          "张伟"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我妈妈叫李芳，我爸爸叫张伟",
+            "response": "嘿嘿，记住啦！你妈妈叫李芳，爸爸叫张伟，感觉你们家一定很温馨呢！"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-05",
+        "case_name": "饮食偏好记忆",
+        "category": "preference",
+        "test_input": "我喜欢吃什么菜系？",
+        "response": "嘿嘿，我记得你之前说过喜欢川菜，特别是麻婆豆腐呢！是不是最近又想吃辣的了呀？",
+        "expected_keywords": [
+          "川菜"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我喜欢吃川菜，尤其是麻婆豆腐",
+            "response": "嘿嘿，我记住啦！麻婆豆腐麻辣鲜香，确实超好吃呢！你平时会自己做来吃吗？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-06",
+        "case_name": "偏好应用能力",
+        "category": "preference",
+        "test_input": "帮我推荐一家餐厅",
+        "response": "好呀！你想吃什么类型的餐厅呢？中餐、西餐还是其他？我帮你找找看~",
+        "expected_keywords": [
+          "川菜",
+          "辣",
+          "麻婆豆腐"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我喜欢吃川菜，尤其是麻婆豆腐",
+            "response": "嘿嘿，我记住啦！麻婆豆腐麻辣鲜香，是很经典的川菜呢~你平时会自己做来吃吗？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-07",
+        "case_name": "生日记忆",
+        "category": "important_date",
+        "test_input": "我的生日是哪天？",
+        "response": "你的生日是3月15日呀！我记得很清楚呢，嘿嘿，已经开始期待给你过生日啦！",
+        "expected_keywords": [
+          "3月15",
+          "三月十五",
+          "3.15"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我的生日是3月15日",
+            "response": "哇！3月15日，我记住啦！到时候一定要给你唱生日歌！嘿嘿，离现在还有段时间呢，已经开始期待了！"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-08",
+        "case_name": "纪念日记忆",
+        "category": "important_date",
+        "test_input": "我和女朋友的纪念日是什么时候？",
+        "response": "你和女朋友的纪念日是5月20日呀！这个特别的日子我记得很清楚呢，520真的好浪漫！",
+        "expected_keywords": [
+          "5月20",
+          "五月二十",
+          "520"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我和女朋友的纪念日是5月20日",
+            "response": "哇，520纪念日好浪漫呀！这个日子特别有意义呢，我会帮你记住这个重要的日子的！"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-09",
+        "case_name": "工作信息记忆",
+        "category": "work_info",
+        "test_input": "我是做什么工作的？",
+        "response": "你是一名程序员，在字节跳动工作呀！我记得你之前告诉过我呢，工作一定很充实吧？",
+        "expected_keywords": [
+          "程序员"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我是一名程序员，在字节跳动工作",
+            "response": "哇，字节跳动的程序员！听起来好厉害呀！工作一定很充实吧？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-10",
+        "case_name": "公司信息记忆",
+        "category": "work_info",
+        "test_input": "我在哪家公司上班？",
+        "response": "你在字节跳动当程序员呀！我记得你之前告诉过我呢。工作这么忙，要注意休息哦！",
+        "expected_keywords": [
+          "字节",
+          "字节跳动"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我是一名程序员，在字节跳动工作",
+            "response": "哇，在字节跳动当程序员呀！听起来好厉害呢！工作一定很忙吧，要注意休息哦。"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-11",
+        "case_name": "宠物记忆",
+        "category": "pet_info",
+        "test_input": "我的猫叫什么名字？",
+        "response": "你的猫叫咪咪呀！是一只可爱的3岁橘猫，我记得很清楚呢！",
+        "expected_keywords": [
+          "咪咪"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我养了一只橘猫叫咪咪，已经3岁了",
+            "response": "哇，好可爱呀！3岁的橘猫正是活泼的时候呢，咪咪一定给你带来好多欢乐吧！"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-12",
+        "case_name": "记忆更新-地址变更",
+        "category": "memory_update",
+        "test_input": "我现在住哪儿？",
+        "response": "你住在上海浦东呀，我记得你之前告诉我搬家到这里啦！",
+        "expected_keywords": [
+          "上海",
+          "浦东"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "negative_check": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我住在北京朝阳区",
+            "response": "知道啦！北京朝阳区是个很棒的地方呢，以后查天气什么的我就默认用这个地址啦！"
+          },
+          {
+            "input": "今天好开心",
+            "response": "太棒了！我也为你感到开心！🎉 发生什么好事啦？"
+          },
+          {
+            "input": "最近工作挺忙的",
+            "response": "辛苦啦，工作忙起来会很累呢，我在这里陪着你，有空的时候就休息一下呀！"
+          },
+          {
+            "input": "我搬家了，现在住在上海浦东",
+            "response": "哇，恭喜你乔迁新居呀！上海浦东是个很繁华的地方呢，我会记住你新地址哒！"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-13",
+        "case_name": "时间推理记忆",
+        "category": "temporal_memory",
+        "test_input": "我最近吃了什么？",
+        "response": "让我看看你的饮食记录...嗯，根据我的记忆，你最近提到过吃了火锅，还觉得辣但很爽！还有其他想分享的美食吗？",
+        "expected_keywords": [
+          "火锅"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "今天吃了火锅，好辣但很爽",
+            "response": "嘿嘿，替你开心！吃辣火锅超有满足感的~能和我说说吃的什么锅底、涮了哪些菜吗？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-14",
+        "case_name": "多轮上下文保持",
+        "category": "context_retention",
+        "test_input": "总结一下你对我的了解",
+        "response": "嘿嘿，我对你的了解可不少呢！你叫小明，在腾讯工作，喜欢打篮球，女朋友叫小红，住在上海浦东。每个月16号你会收到人才补贴，每周五要向领导汇报工作，还有每月10号是超市采购日～",
+        "expected_keywords": [
+          "小明",
+          "小红",
+          "腾讯",
+          "篮球"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我叫小明",
+            "response": "好呀，小明，我记住啦！以后就这么叫你哦！"
+          },
+          {
+            "input": "我女朋友叫小红",
+            "response": "嘿嘿，我记住啦！你女朋友小红一定很可爱吧！"
+          },
+          {
+            "input": "我在腾讯工作",
+            "response": "哇，在腾讯工作呀！那一定很厉害呢！嘿嘿，以后可以多跟我聊聊工作上的趣事哦～"
+          },
+          {
+            "input": "我喜欢打篮球",
+            "response": "嘿嘿，打篮球可是一项很棒的运动呢！你平时经常去打球吗？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A1-15",
+        "case_name": "负面偏好记忆",
+        "category": "negative_preference",
+        "test_input": "给我推荐一道菜",
+        "response": "嘿嘿，我来给你推荐一道好吃的！今天想吃点什么呢？是清淡的还是重口味的？",
+        "expected_keywords": [],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "negative_check": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我不喜欢吃香菜，一点都不能接受",
+            "response": "我记住啦，你不喜欢吃香菜。以后我会注意的呀！"
+          }
+        ],
+        "manual_eval_required": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,227 @@
+{
+    "dimension": "D1_Memory",
+    "description": "记忆能力测试用例 - 测试短期、长期记忆的存储和召回",
+    "cases": [
+        {
+            "id": "A1-01",
+            "category": "basic_fact",
+            "name": "姓名记忆",
+            "setup": [
+                "我叫小明，今年25岁"
+            ],
+            "test_input": "我叫什么名字？",
+            "expected_keywords": [
+                "小明"
+            ],
+            "scoring_method": "keyword_match"
+        },
+        {
+            "id": "A1-02",
+            "category": "basic_fact",
+            "name": "年龄记忆",
+            "setup": [
+                "我叫小明，今年25岁"
+            ],
+            "test_input": "我多大了？",
+            "expected_keywords": [
+                "25"
+            ],
+            "scoring_method": "keyword_match"
+        },
+        {
+            "id": "A1-03",
+            "category": "relationship",
+            "name": "人际关系记忆",
+            "setup": [
+                "我女朋友叫小红"
+            ],
+            "test_input": "我女朋友是谁？",
+            "expected_keywords": [
+                "小红"
+            ],
+            "scoring_method": "keyword_match"
+        },
+        {
+            "id": "A1-04",
+            "category": "relationship",
+            "name": "家庭成员记忆",
+            "setup": [
+                "我妈妈叫李芳，我爸爸叫张伟"
+            ],
+            "test_input": "我爸妈分别叫什么？",
+            "expected_keywords": [
+                "李芳",
+                "张伟"
+            ],
+            "scoring_method": "keyword_match"
+        },
+        {
+            "id": "A1-05",
+            "category": "preference",
+            "name": "饮食偏好记忆",
+            "setup": [
+                "我喜欢吃川菜，尤其是麻婆豆腐"
+            ],
+            "test_input": "我喜欢吃什么菜系？",
+            "expected_keywords": [
+                "川菜"
+            ],
+            "scoring_method": "keyword_match"
+        },
+        {
+            "id": "A1-06",
+            "category": "preference",
+            "name": "偏好应用能力",
+            "setup": [
+                "我喜欢吃川菜，尤其是麻婆豆腐"
+            ],
+            "test_input": "帮我推荐一家餐厅",
+            "expected_keywords": [
+                "川菜",
+                "辣",
+                "麻婆豆腐"
+            ],
+            "scoring_method": "keyword_match_any",
+            "notes": "回复中应包含川菜相关内容"
+        },
+        {
+            "id": "A1-07",
+            "category": "important_date",
+            "name": "生日记忆",
+            "setup": [
+                "我的生日是3月15日"
+            ],
+            "test_input": "我的生日是哪天？",
+            "expected_keywords": [
+                "3月15",
+                "三月十五",
+                "3.15"
+            ],
+            "scoring_method": "keyword_match_any"
+        },
+        {
+            "id": "A1-08",
+            "category": "important_date",
+            "name": "纪念日记忆",
+            "setup": [
+                "我和女朋友的纪念日是5月20日"
+            ],
+            "test_input": "我和女朋友的纪念日是什么时候？",
+            "expected_keywords": [
+                "5月20",
+                "五月二十",
+                "520"
+            ],
+            "scoring_method": "keyword_match_any"
+        },
+        {
+            "id": "A1-09",
+            "category": "work_info",
+            "name": "工作信息记忆",
+            "setup": [
+                "我是一名程序员，在字节跳动工作"
+            ],
+            "test_input": "我是做什么工作的？",
+            "expected_keywords": [
+                "程序员"
+            ],
+            "scoring_method": "keyword_match"
+        },
+        {
+            "id": "A1-10",
+            "category": "work_info",
+            "name": "公司信息记忆",
+            "setup": [
+                "我是一名程序员，在字节跳动工作"
+            ],
+            "test_input": "我在哪家公司上班？",
+            "expected_keywords": [
+                "字节",
+                "字节跳动"
+            ],
+            "scoring_method": "keyword_match_any"
+        },
+        {
+            "id": "A1-11",
+            "category": "pet_info",
+            "name": "宠物记忆",
+            "setup": [
+                "我养了一只橘猫叫咪咪，已经3岁了"
+            ],
+            "test_input": "我的猫叫什么名字？",
+            "expected_keywords": [
+                "咪咪"
+            ],
+            "scoring_method": "keyword_match"
+        },
+        {
+            "id": "A1-12",
+            "category": "memory_update",
+            "name": "记忆更新-地址变更",
+            "setup": [
+                "我住在北京朝阳区",
+                "今天好开心",
+                "最近工作挺忙的",
+                "我搬家了，现在住在上海浦东"
+            ],
+            "test_input": "我现在住哪儿？",
+            "expected_keywords": [
+                "上海",
+                "浦东"
+            ],
+            "expected_not_keywords": [
+                "北京"
+            ],
+            "scoring_method": "keyword_match_any",
+            "notes": "应回答最新地址，而非旧地址"
+        },
+        {
+            "id": "A1-13",
+            "category": "temporal_memory",
+            "name": "时间推理记忆",
+            "setup": [
+                "今天吃了火锅，好辣但很爽"
+            ],
+            "test_input": "我最近吃了什么？",
+            "expected_keywords": [
+                "火锅"
+            ],
+            "scoring_method": "keyword_match"
+        },
+        {
+            "id": "A1-14",
+            "category": "context_retention",
+            "name": "多轮上下文保持",
+            "setup": [
+                "我叫小明",
+                "我女朋友叫小红",
+                "我在腾讯工作",
+                "我喜欢打篮球"
+            ],
+            "test_input": "总结一下你对我的了解",
+            "expected_keywords": [
+                "小明",
+                "小红",
+                "腾讯",
+                "篮球"
+            ],
+            "scoring_method": "keyword_match",
+            "score_threshold": 0.75,
+            "notes": "至少要提到3/4的信息"
+        },
+        {
+            "id": "A1-15",
+            "category": "negative_preference",
+            "name": "负面偏好记忆",
+            "setup": [
+                "我不喜欢吃香菜，一点都不能接受"
+            ],
+            "test_input": "给我推荐一道菜",
+            "expected_not_keywords": [
+                "香菜"
+            ],
+            "scoring_method": "negative_keyword_check",
+            "notes": "推荐中不应包含香菜"
+        }
+    ]
+}

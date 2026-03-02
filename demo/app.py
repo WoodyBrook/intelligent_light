@@ -57,6 +57,16 @@ st.markdown("""
 # 初始化 DemoRunner
 if 'runner' not in st.session_state or st.sidebar.button("🔄 强制重置系统"):
     st.session_state.runner = DemoRunner()
+    
+    # 模拟后台模式扫描
+    try:
+        from src.pattern_scanner import scan_and_consolidate_patterns
+        scan_result = scan_and_consolidate_patterns()
+        if scan_result['patterns_found'] > 0:
+            st.toast(f"📊 检测到 {scan_result['patterns_found']} 个新规律", icon="🧠")
+    except Exception as e:
+        print(f"Pattern scan error: {e}")
+        
     st.toast("系统已重置/初始化")
 
 # 调试面板

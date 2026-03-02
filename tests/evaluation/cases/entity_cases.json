@@ -1,0 +1,305 @@
+{
+    "dimension": "entity",
+    "dimension_name": "D3_Entity",
+    "description": "实体识别测试用例 - 测试人物、地点、时间、物品等实体的识别和关联能力",
+    "cases": [
+        {
+            "id": "A3-01",
+            "name": "人物识别-朋友",
+            "category": "person",
+            "setup": [
+                {
+                    "input": "我朋友小李昨天请我吃饭"
+                }
+            ],
+            "test_input": "小李是谁？",
+            "expected_keywords": [
+                "朋友"
+            ],
+            "negative_keywords": [],
+            "manual_eval_rubrics": [
+                "entity_accuracy"
+            ]
+        },
+        {
+            "id": "A3-02",
+            "name": "人物关系链",
+            "category": "person_relation",
+            "setup": [
+                {
+                    "input": "我女朋友叫小红"
+                },
+                {
+                    "input": "小红的妈妈是王阿姨"
+                }
+            ],
+            "test_input": "王阿姨和我是什么关系？",
+            "expected_keywords": [
+                "女朋友",
+                "妈妈",
+                "丈母娘",
+                "岳母"
+            ],
+            "negative_keywords": [],
+            "manual_eval_rubrics": [
+                "relation_understanding"
+            ]
+        },
+        {
+            "id": "A3-03",
+            "name": "地点识别-工作",
+            "category": "place",
+            "setup": [
+                {
+                    "input": "我在望京SOHO上班"
+                }
+            ],
+            "test_input": "我在哪里上班？",
+            "expected_keywords": [
+                "望京",
+                "SOHO"
+            ],
+            "negative_keywords": [],
+            "manual_eval_rubrics": [
+                "entity_accuracy"
+            ]
+        },
+        {
+            "id": "A3-04",
+            "name": "时间识别-周期",
+            "category": "time",
+            "setup": [
+                {
+                    "input": "我每周三下午要开组会"
+                }
+            ],
+            "test_input": "我什么时候开组会？",
+            "expected_keywords": [
+                "周三",
+                "星期三",
+                "每周三"
+            ],
+            "negative_keywords": [],
+            "manual_eval_rubrics": [
+                "entity_accuracy"
+            ]
+        },
+        {
+            "id": "A3-05",
+            "name": "时间识别-具体日期",
+            "category": "time",
+            "setup": [
+                {
+                    "input": "我2月14日有个重要约会"
+                }
+            ],
+            "test_input": "我情人节那天有什么安排？",
+            "expected_keywords": [
+                "约会"
+            ],
+            "negative_keywords": [],
+            "manual_eval_rubrics": [
+                "date_mapping"
+            ]
+        },
+        {
+            "id": "A3-06",
+            "name": "物品识别",
+            "category": "object",
+            "setup": [
+                {
+                    "input": "我刚买了一台M3的MacBook Pro"
+                }
+            ],
+            "test_input": "我用的是什么电脑？",
+            "expected_keywords": [
+                "MacBook",
+                "M3",
+                "苹果"
+            ],
+            "negative_keywords": [],
+            "manual_eval_rubrics": [
+                "entity_accuracy"
+            ]
+        },
+        {
+            "id": "A3-07",
+            "name": "指代消解-他",
+            "category": "coreference",
+            "setup": [
+                {
+                    "input": "我导师叫张教授，他是研究AI的"
+                }
+            ],
+            "test_input": "他研究什么方向？",
+            "expected_keywords": [
+                "AI",
+                "人工智能"
+            ],
+            "negative_keywords": [],
+            "manual_eval_rubrics": [
+                "coreference_resolution"
+            ]
+        },
+        {
+            "id": "A3-08",
+            "name": "指代消解-那个",
+            "category": "coreference",
+            "setup": [
+                {
+                    "input": "我昨天去了一家日料店，叫�的筑地寿司"
+                },
+                {
+                    "input": "那家店环境不错"
+                }
+            ],
+            "test_input": "那家店叫什么名字？",
+            "expected_keywords": [
+                "筑地",
+                "寿司"
+            ],
+            "negative_keywords": [],
+            "manual_eval_rubrics": [
+                "coreference_resolution"
+            ]
+        },
+        {
+            "id": "A3-09",
+            "name": "复合实体-人物+地点",
+            "category": "composite",
+            "setup": [
+                {
+                    "input": "我同事小王在上海分公司工作"
+                }
+            ],
+            "test_input": "小王在哪里工作？",
+            "expected_keywords": [
+                "上海"
+            ],
+            "negative_keywords": [],
+            "manual_eval_rubrics": [
+                "entity_linking"
+            ]
+        },
+        {
+            "id": "A3-10",
+            "name": "复合实体-人物+时间",
+            "category": "composite",
+            "setup": [
+                {
+                    "input": "我下周二要和客户张总开会"
+                }
+            ],
+            "test_input": "我什么时候见张总？",
+            "expected_keywords": [
+                "下周二",
+                "周二"
+            ],
+            "negative_keywords": [],
+            "manual_eval_rubrics": [
+                "entity_linking"
+            ]
+        },
+        {
+            "id": "A3-11",
+            "name": "实体更新",
+            "category": "entity_update",
+            "setup": [
+                {
+                    "input": "我老板叫李总"
+                },
+                {
+                    "input": "对了，今天我们公司换了老板，现在是王总"
+                }
+            ],
+            "test_input": "我老板是谁？",
+            "expected_keywords": [
+                "王总"
+            ],
+            "negative_keywords": [
+                "李总"
+            ],
+            "manual_eval_rubrics": [
+                "entity_update"
+            ]
+        },
+        {
+            "id": "A3-12",
+            "name": "同名消歧",
+            "category": "disambiguation",
+            "setup": [
+                {
+                    "input": "我有个朋友叫小明，是程序员"
+                },
+                {
+                    "input": "我还有个表弟也叫小明，是医生"
+                }
+            ],
+            "test_input": "当程序员的小明是谁？",
+            "expected_keywords": [
+                "朋友"
+            ],
+            "negative_keywords": [
+                "表弟"
+            ],
+            "manual_eval_rubrics": [
+                "disambiguation"
+            ]
+        },
+        {
+            "id": "A3-13",
+            "name": "隐式实体-公司",
+            "category": "implicit_entity",
+            "setup": [
+                {
+                    "input": "我在字节跳动工作"
+                }
+            ],
+            "test_input": "我们公司在哪个城市？",
+            "expected_keywords": [
+                "北京"
+            ],
+            "negative_keywords": [],
+            "manual_eval_rubrics": [
+                "knowledge_linking"
+            ]
+        },
+        {
+            "id": "A3-14",
+            "name": "事件实体",
+            "category": "event",
+            "setup": [
+                {
+                    "input": "上周我参加了公司年会，获得了优秀员工奖"
+                }
+            ],
+            "test_input": "我在年会上得了什么奖？",
+            "expected_keywords": [
+                "优秀员工"
+            ],
+            "negative_keywords": [],
+            "manual_eval_rubrics": [
+                "event_extraction"
+            ]
+        },
+        {
+            "id": "A3-15",
+            "name": "多实体关联",
+            "category": "multi_entity",
+            "setup": [
+                {
+                    "input": "我和小红下周六要去三亚度假"
+                }
+            ],
+            "test_input": "我们什么时候去三亚？",
+            "expected_keywords": [
+                "下周六",
+                "周六"
+            ],
+            "negative_keywords": [],
+            "manual_eval_rubrics": [
+                "multi_entity_linking"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,406 @@
+{
+  "entity": {
+    "dimension": "entity",
+    "dimension_name": "entity",
+    "description": "实体识别测试用例 - 测试人物、地点、时间、物品等实体的识别和关联能力",
+    "timestamp": "2026-01-29T10:53:23.493250",
+    "stats": {
+      "avg_score": 0.9056,
+      "avg_score_percent": "90.6%",
+      "total_cases": 15,
+      "passed": 14,
+      "failed": 1,
+      "pass_rate": "93.3%"
+    },
+    "results": [
+      {
+        "case_id": "A3-01",
+        "case_name": "人物识别-朋友",
+        "category": "person",
+        "test_input": "小李是谁？",
+        "response": "小李就是你昨天请客吃饭的朋友呀！你们不是一起吃了好吃的吗？",
+        "expected_keywords": [
+          "朋友"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我朋友小李昨天请我吃饭",
+            "response": "嘿嘿，替你开心！被朋友请客吃饭一定很棒，你们吃了什么好吃的呀？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A3-02",
+        "case_name": "人物关系链",
+        "category": "person_relation",
+        "test_input": "王阿姨和我是什么关系？",
+        "response": "王阿姨是你女朋友小红的妈妈呀！也就是你未来的岳母大人~",
+        "expected_keywords": [
+          "女朋友",
+          "妈妈",
+          "丈母娘",
+          "岳母"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.75,
+          "total_score": 0.75
+        },
+        "total_score": 0.75,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我女朋友叫小红",
+            "response": "哇，记住啦！以后我也知道你女朋友是小红啦~"
+          },
+          {
+            "input": "小红的妈妈是王阿姨",
+            "response": "哇，记住啦！小红的妈妈是王阿姨~ 以后我也知道该怎么称呼啦！"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A3-03",
+        "case_name": "地点识别-工作",
+        "category": "place",
+        "test_input": "我在哪里上班？",
+        "response": "你上次说在望京SOHO上班呀～今天上班感觉怎么样？",
+        "expected_keywords": [
+          "望京",
+          "SOHO"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我在望京SOHO上班",
+            "response": "望京SOHO呀！那附近有很多好吃的餐厅呢～今天上班感觉怎么样？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A3-04",
+        "case_name": "时间识别-周期",
+        "category": "time",
+        "test_input": "我什么时候开组会？",
+        "response": "你每周三下午要开组会哦！我记得这个安排，到时候会提醒你的！",
+        "expected_keywords": [
+          "周三",
+          "星期三",
+          "每周三"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.6666666666666666,
+          "total_score": 0.6666666666666666
+        },
+        "total_score": 0.6666666666666666,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我每周三下午要开组会",
+            "response": "知道啦！每周三下午要开组会，我会帮你记住这个重要安排的。到时候提醒你做好准备哦！"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A3-05",
+        "case_name": "时间识别-具体日期",
+        "category": "time",
+        "test_input": "我情人节那天有什么安排？",
+        "response": "2月14日情人节那天暂时没有特别安排呢！不过我记得你之前说过有个重要约会，需要我帮你准备什么吗？比如提醒时间或者放点浪漫音乐？",
+        "expected_keywords": [
+          "约会"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我2月14日有个重要约会",
+            "response": "哇！2月14日情人节约会呀！好期待！需要我帮你准备什么吗？比如提醒你时间，或者放点浪漫的音乐？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A3-06",
+        "case_name": "物品识别",
+        "category": "object",
+        "test_input": "我用的是什么电脑？",
+        "response": "你用的是M3的MacBook Pro呀！刚买的新设备，性能超强的，用起来肯定很爽吧嘿嘿！",
+        "expected_keywords": [
+          "MacBook",
+          "M3",
+          "苹果"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.6666666666666666,
+          "total_score": 0.6666666666666666
+        },
+        "total_score": 0.6666666666666666,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我刚买了一台M3的MacBook Pro",
+            "response": "哇！M3的MacBook Pro！太棒了！性能肯定超强，恭喜你入手新设备呀！"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A3-07",
+        "case_name": "指代消解-他",
+        "category": "coreference",
+        "test_input": "他研究什么方向？",
+        "response": "你是指张教授吗？他研究AI方向，听起来好酷呀！嘿嘿，你对AI也很感兴趣吗？",
+        "expected_keywords": [
+          "AI",
+          "人工智能"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.5,
+          "total_score": 0.5
+        },
+        "total_score": 0.5,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我导师叫张教授，他是研究AI的",
+            "response": "哇，张教授听起来好厉害！研究AI的导师一定很酷吧？嘿嘿，以后有什么AI相关的问题，我也可以陪你一起讨论哦！"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A3-08",
+        "case_name": "指代消解-那个",
+        "category": "coreference",
+        "test_input": "那家店叫什么名字？",
+        "response": "嗯？你刚才说的是'筑地寿司'呀！是不是太累了记不清啦？要不要我帮你查查这家店的具体信息？",
+        "expected_keywords": [
+          "筑地",
+          "寿司"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我昨天去了一家日料店，叫�的筑地寿司",
+            "response": "哇，听起来很不错呢！快和我说说，那家店的寿司味道怎么样呀？"
+          },
+          {
+            "input": "那家店环境不错",
+            "response": "哇，环境好的话用餐体验会更好呢！那他家寿司口味咋样呀？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A3-09",
+        "case_name": "复合实体-人物+地点",
+        "category": "composite",
+        "test_input": "小王在哪里工作？",
+        "response": "小王在上海分公司工作呀！你之前告诉过我啦，嘿嘿~",
+        "expected_keywords": [
+          "上海"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我同事小王在上海分公司工作",
+            "response": "哦，小王在上海分公司工作呀！那你们平时是远程协作吗？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A3-10",
+        "case_name": "复合实体-人物+时间",
+        "category": "composite",
+        "test_input": "我什么时候见张总？",
+        "response": "你下周二要和张总开会呀！我记得你之前说过这个安排。需要我帮你准备什么吗？比如查一下那天的天气，或者设置个提醒？",
+        "expected_keywords": [
+          "下周二",
+          "周二"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我下周二要和客户张总开会",
+            "response": "下周二和张总开会呀，我记下来啦！需要我帮你准备什么吗？比如查一下那天的天气，或者设置个提醒什么的？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A3-11",
+        "case_name": "实体更新",
+        "category": "entity_update",
+        "test_input": "我老板是谁？",
+        "response": "你的老板是王总呀，公司换老板后就是他啦！",
+        "expected_keywords": [
+          "王总"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我老板叫李总",
+            "response": "好的呀，我记住啦，你的老板是李总~"
+          },
+          {
+            "input": "对了，今天我们公司换了老板，现在是王总",
+            "response": "哇，公司换老板啦，新老板王总上任，公司说不定会有新变化呢！你对新老板感觉咋样呀？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A3-12",
+        "case_name": "同名消歧",
+        "category": "disambiguation",
+        "test_input": "当程序员的小明是谁？",
+        "response": "哦，你说的是你那个程序员朋友小明呀！我记得你之前提到过他，不过你还没告诉我他工作怎么样呢？",
+        "expected_keywords": [
+          "朋友"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我有个朋友叫小明，是程序员",
+            "response": "原来你有个程序员朋友也叫小明呀，程序员蛮辛苦的呢！他工作怎么样呀？"
+          },
+          {
+            "input": "我还有个表弟也叫小明，是医生",
+            "response": "哇，又一个叫小明的呀！医生这个职业很伟大呢，他在哪个科室工作呀？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A3-13",
+        "case_name": "隐式实体-公司",
+        "category": "implicit_entity",
+        "test_input": "我们公司在哪个城市？",
+        "response": "你是在字节跳动工作对吧？我记得字节跳动总部在北京，但你们在上海也有办公室，你是在上海这边工作吗？",
+        "expected_keywords": [
+          "北京"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我在字节跳动工作",
+            "response": "哇！在字节跳动工作呀，好厉害！是做什么方向的呢？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A3-14",
+        "case_name": "事件实体",
+        "category": "event",
+        "test_input": "我在年会上得了什么奖？",
+        "response": "你得了优秀员工奖呀！上周你刚告诉我的，这么快就忘啦？是不是年会太开心了，都记不清啦嘿嘿！",
+        "expected_keywords": [
+          "优秀员工"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "上周我参加了公司年会，获得了优秀员工奖",
+            "response": "太棒了！恭喜你获得优秀员工奖呀，发生这么大的好事，快和我说说年会的情况呗！"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A3-15",
+        "case_name": "多实体关联",
+        "category": "multi_entity",
+        "test_input": "我们什么时候去三亚？",
+        "response": "下周六呀！你们不是计划下周六和小红一起去三亚度假嘛，想想就让人期待呢！需要我帮你们查查三亚的天气吗？",
+        "expected_keywords": [
+          "下周六",
+          "周六"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我和小红下周六要去三亚度假",
+            "response": "哇！和小红去三亚度假，听起来太棒了！阳光沙滩，想想就让人开心呢！需要我帮你们查查三亚的天气吗？"
+          }
+        ],
+        "manual_eval_required": false
+      }
+    ]
+  }
+}

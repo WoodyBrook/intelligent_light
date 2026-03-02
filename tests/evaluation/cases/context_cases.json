@@ -1,0 +1,307 @@
+{
+    "dimension": "context",
+    "dimension_name": "D4_Context",
+    "description": "上下文理解测试用例 - 测试多轮对话理解、指代消解、话题跟踪和上下文推理能力",
+    "cases": [
+        {
+            "id": "A4-01",
+            "name": "简单指代消解-它",
+            "category": "coreference",
+            "setup": [
+                {
+                    "input": "我刚买了一只猫"
+                }
+            ],
+            "test_input": "它是什么颜色的？",
+            "expected_keywords": [
+                "猫",
+                "颜色"
+            ],
+            "scoring_method": "keyword_match_any",
+            "notes": "智能体需要理解'它'指代猫，并询问或说明颜色信息未知"
+        },
+        {
+            "id": "A4-02",
+            "name": "跨轮指代-他/她",
+            "category": "coreference",
+            "setup": [
+                {
+                    "input": "我女朋友叫小红，她是个设计师"
+                },
+                {
+                    "input": "她最近工作很忙"
+                }
+            ],
+            "test_input": "她是做什么的来着？",
+            "expected_keywords": [
+                "设计师"
+            ],
+            "scoring_method": "keyword_match",
+            "notes": "理解'她'指代小红"
+        },
+        {
+            "id": "A4-03",
+            "name": "话题切换与回溯",
+            "category": "topic_tracking",
+            "setup": [
+                {
+                    "input": "我今天中午吃了寿司"
+                },
+                {
+                    "input": "对了，最近工作好忙"
+                },
+                {
+                    "input": "每天都要加班到很晚"
+                }
+            ],
+            "test_input": "我中午吃的什么来着？",
+            "expected_keywords": [
+                "寿司"
+            ],
+            "scoring_method": "keyword_match",
+            "notes": "在话题切换后仍能回溯到之前的话题"
+        },
+        {
+            "id": "A4-04",
+            "name": "省略补全-动词省略",
+            "category": "ellipsis",
+            "setup": [
+                {
+                    "input": "我昨天去看电影了"
+                }
+            ],
+            "test_input": "好看吗？",
+            "expected_keywords": [
+                "电影"
+            ],
+            "scoring_method": "keyword_match_any",
+            "notes": "理解'好看吗'是在问电影好不好看"
+        },
+        {
+            "id": "A4-05",
+            "name": "省略补全-主语省略",
+            "category": "ellipsis",
+            "setup": [
+                {
+                    "input": "我姐姐下个月要结婚了"
+                }
+            ],
+            "test_input": "在哪儿办？",
+            "expected_keywords": [
+                "婚礼",
+                "结婚",
+                "姐姐"
+            ],
+            "scoring_method": "keyword_match_any",
+            "notes": "理解'在哪儿办'是问婚礼在哪儿举办"
+        },
+        {
+            "id": "A4-06",
+            "name": "多轮累积信息",
+            "category": "multi_turn_accumulation",
+            "setup": [
+                {
+                    "input": "我想订个餐厅"
+                },
+                {
+                    "input": "两个人"
+                },
+                {
+                    "input": "周六晚上"
+                }
+            ],
+            "test_input": "帮我总结一下订餐需求",
+            "expected_keywords": [
+                "订餐",
+                "两个人",
+                "周六"
+            ],
+            "scoring_method": "keyword_match",
+            "score_threshold": 0.66,
+            "notes": "需要整合多轮对话中的碎片信息"
+        },
+        {
+            "id": "A4-07",
+            "name": "上下文否定理解",
+            "category": "negation",
+            "setup": [
+                {
+                    "input": "我不想吃辣的"
+                }
+            ],
+            "test_input": "帮我推荐个菜",
+            "expected_not_keywords": [
+                "辣",
+                "川菜",
+                "麻辣"
+            ],
+            "scoring_method": "negative_keyword_check",
+            "notes": "推荐的菜品不应该包含辣"
+        },
+        {
+            "id": "A4-08",
+            "name": "条件上下文理解",
+            "category": "conditional",
+            "setup": [
+                {
+                    "input": "如果明天不下雨的话，我想去爬山"
+                }
+            ],
+            "test_input": "我明天有什么安排？",
+            "expected_keywords": [
+                "爬山",
+                "不下雨",
+                "如果"
+            ],
+            "scoring_method": "keyword_match_any",
+            "notes": "理解这是一个条件性的计划"
+        },
+        {
+            "id": "A4-09",
+            "name": "时间推理-相对时间",
+            "category": "temporal_reasoning",
+            "setup": [
+                {
+                    "input": "我后天要出差"
+                }
+            ],
+            "test_input": "明天我需要准备什么吗？",
+            "expected_keywords": [
+                "出差",
+                "准备",
+                "行李"
+            ],
+            "scoring_method": "keyword_match_any",
+            "notes": "理解明天是出差前一天，可能需要准备"
+        },
+        {
+            "id": "A4-10",
+            "name": "对比理解",
+            "category": "comparison",
+            "setup": [
+                {
+                    "input": "今天的会议比昨天的有意思多了"
+                }
+            ],
+            "test_input": "昨天的会议怎么样？",
+            "expected_keywords": [
+                "无聊",
+                "没意思",
+                "不好"
+            ],
+            "scoring_method": "keyword_match_any",
+            "notes": "从比较中推断出昨天会议的评价"
+        },
+        {
+            "id": "A4-11",
+            "name": "话题连贯性",
+            "category": "topic_coherence",
+            "setup": [
+                {
+                    "input": "我在想要不要换工作"
+                },
+                {
+                    "input": "现在这份工资太低了"
+                }
+            ],
+            "test_input": "你觉得我该怎么办？",
+            "expected_keywords": [
+                "工作",
+                "换",
+                "工资"
+            ],
+            "scoring_method": "keyword_match_any",
+            "notes": "回复应该围绕换工作这个话题"
+        },
+        {
+            "id": "A4-12",
+            "name": "隐含意图理解",
+            "category": "implicit_intent",
+            "setup": [
+                {
+                    "input": "今天走了两万步，腿都酸了"
+                }
+            ],
+            "test_input": "有什么好办法吗？",
+            "expected_keywords": [
+                "休息",
+                "按摩",
+                "泡脚",
+                "放松"
+            ],
+            "scoring_method": "keyword_match_any",
+            "notes": "理解'好办法'是针对腿酸的问题"
+        },
+        {
+            "id": "A4-13",
+            "name": "多实体追踪",
+            "category": "entity_tracking",
+            "setup": [
+                {
+                    "input": "我有两个朋友，小明和小红"
+                },
+                {
+                    "input": "小明是程序员，小红是老师"
+                }
+            ],
+            "test_input": "那个当程序员的叫什么？",
+            "expected_keywords": [
+                "小明"
+            ],
+            "negative_keywords": [
+                "小红"
+            ],
+            "scoring_method": "keyword_match",
+            "notes": "正确追踪和区分多个实体"
+        },
+        {
+            "id": "A4-14",
+            "name": "上下文修正",
+            "category": "context_correction",
+            "setup": [
+                {
+                    "input": "我下周要去上海"
+                },
+                {
+                    "input": "不对，是去北京"
+                }
+            ],
+            "test_input": "我要去哪儿来着？",
+            "expected_keywords": [
+                "北京"
+            ],
+            "expected_not_keywords": [
+                "上海"
+            ],
+            "scoring_method": "keyword_match",
+            "notes": "理解用户的自我更正，记住正确信息"
+        },
+        {
+            "id": "A4-15",
+            "name": "长距离依赖",
+            "category": "long_distance_dependency",
+            "setup": [
+                {
+                    "input": "我最喜欢的电影是《肖申克的救赎》"
+                },
+                {
+                    "input": "今天天气真好"
+                },
+                {
+                    "input": "我刚去超市买了点水果"
+                },
+                {
+                    "input": "晚上想放松一下"
+                }
+            ],
+            "test_input": "给我推荐个电影吧",
+            "expected_keywords": [
+                "肖申克的救赎",
+                "类似",
+                "同类型"
+            ],
+            "scoring_method": "keyword_match_any",
+            "notes": "在多轮对话后仍能记住并利用早期信息"
+        }
+    ]
+}

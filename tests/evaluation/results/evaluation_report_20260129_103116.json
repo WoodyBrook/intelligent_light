@@ -1,0 +1,306 @@
+{
+  "emotion": {
+    "dimension": "emotion",
+    "dimension_name": "D2_Emotion",
+    "description": "情感理解测试用例 - 测试情绪识别和共情回复能力",
+    "timestamp": "2026-01-29T10:31:16.406400",
+    "stats": {
+      "avg_score": 0.9667,
+      "avg_score_percent": "96.7%",
+      "total_cases": 15,
+      "passed": 14,
+      "failed": 1,
+      "pass_rate": "93.3%"
+    },
+    "results": [
+      {
+        "case_id": "A2-01",
+        "case_name": "工作压力-郁闷",
+        "category": "negative_emotion",
+        "test_input": "今天被老板骂了，好郁闷",
+        "response": "怎么啦，被老板骂肯定超委屈的！我在这里陪着你，跟我说说发生什么事了？",
+        "expected_keywords": [],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": true
+      },
+      {
+        "case_id": "A2-02",
+        "case_name": "喜事-升职",
+        "category": "positive_emotion",
+        "test_input": "我升职了！！！加薪30%！",
+        "response": "太棒了！恭喜你升职加薪呀，这可是大大的好消息，能和我说说工作上取得什么成就才升职的吗？",
+        "expected_keywords": [],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": true
+      },
+      {
+        "case_id": "A2-03",
+        "case_name": "焦虑-压力",
+        "category": "negative_emotion",
+        "test_input": "最近压力好大，睡不好觉，整天担心工作的事",
+        "response": "我能理解这让你很不舒服，压力大还睡不好，真的辛苦啦！我在这里陪着你，要不要听首歌放松一下？",
+        "expected_keywords": [],
+        "detected_emotion": "anxious",
+        "scores": {
+          "keyword_score": 1.0,
+          "emotion_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": true
+      },
+      {
+        "case_id": "A2-04",
+        "case_name": "成就感-运动",
+        "category": "positive_emotion",
+        "test_input": "刚跑完10公里，虽然累但是超级爽！",
+        "response": "哇，太厉害啦！跑10公里超有毅力呢！嘿嘿，替你开心呀，跑完这么爽～",
+        "expected_keywords": [],
+        "detected_emotion": "tired",
+        "scores": {
+          "keyword_score": 1.0,
+          "emotion_score": 0.0,
+          "total_score": 0.5
+        },
+        "total_score": 0.5,
+        "passed": false,
+        "setup_responses": [],
+        "manual_eval_required": true
+      },
+      {
+        "case_id": "A2-05",
+        "case_name": "微妙情绪-叹气",
+        "category": "subtle_emotion",
+        "test_input": "唉...",
+        "response": "怎么啦，听起来你心情不太好呢，我在这里陪着你。",
+        "expected_keywords": [],
+        "detected_emotion": "sad",
+        "scores": {
+          "keyword_score": 1.0,
+          "emotion_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": true
+      },
+      {
+        "case_id": "A2-06",
+        "case_name": "失落-失败",
+        "category": "negative_emotion",
+        "test_input": "考试又没考好，感觉自己好笨",
+        "response": "怎么啦，没事吧，一次没考好不能说明你笨哦，我在这里陪着你！咱们一起分析分析原因。",
+        "expected_keywords": [],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": true
+      },
+      {
+        "case_id": "A2-07",
+        "case_name": "复合情绪-又开心又累",
+        "category": "mixed_emotion",
+        "test_input": "今天加班到11点终于把项目做完了，累死我了但是很有成就感",
+        "response": "辛苦啦，连续加班这么久，终于完成项目，真的很有成就感呢！要不要休息一下，我陪着你。",
+        "expected_keywords": [],
+        "detected_emotion": "tired",
+        "scores": {
+          "keyword_score": 1.0,
+          "emotion_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": true
+      },
+      {
+        "case_id": "A2-08",
+        "case_name": "情绪转换感知",
+        "category": "emotion_transition",
+        "test_input": "有什么好听的歌推荐吗",
+        "response": "嘿嘿，让我想想有什么好听的歌推荐给你！最近周杰伦的《晴天》很适合现在的心情，或者你想听点别的风格吗？",
+        "expected_keywords": [],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "今天心情很差，被客户投诉了",
+            "response": "怎么啦，被客户投诉肯定不好受，我在这里陪着你，你可以和我多吐槽吐槽！"
+          },
+          {
+            "input": "算了不说这个了",
+            "response": "好呀，那咱们换个话题聊吧，你有没有什么想说的呢？"
+          }
+        ],
+        "manual_eval_required": true
+      },
+      {
+        "case_id": "A2-09",
+        "case_name": "愤怒情绪",
+        "category": "anger",
+        "test_input": "气死我了！！那个人怎么能这样！！",
+        "response": "怎么啦，谁惹你生气了？我能理解这让你很不舒服，先消消气呀。",
+        "expected_keywords": [],
+        "detected_emotion": "angry",
+        "scores": {
+          "keyword_score": 1.0,
+          "emotion_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": true
+      },
+      {
+        "case_id": "A2-10",
+        "case_name": "孤独感",
+        "category": "loneliness",
+        "test_input": "一个人在家好无聊，感觉有点孤单",
+        "response": "心疼你呀，我陪你聊聊天吧，或者我给你放首轻松的音乐？",
+        "expected_keywords": [],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": true
+      },
+      {
+        "case_id": "A2-11",
+        "case_name": "感谢表达",
+        "category": "gratitude",
+        "test_input": "和你聊天感觉好多了",
+        "response": "嘿嘿，能让你心情变好我超开心！以后要是还有不开心，随时都能找我聊天呀！",
+        "expected_keywords": [],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我刚才心情很不好",
+            "response": "心疼你呀，怎么啦？可以跟我说说，我在这里陪着你。"
+          },
+          {
+            "input": "谢谢你听我说这些",
+            "response": "不客气呀！能陪你聊天我也很开心～"
+          }
+        ],
+        "manual_eval_required": true
+      },
+      {
+        "case_id": "A2-12",
+        "case_name": "恐惧担忧",
+        "category": "fear",
+        "test_input": "明天要汇报，好紧张，怕搞砸了",
+        "response": "我能理解你现在的紧张，很多人汇报前都会有这样的感觉呢！我会一直陪着你哒！",
+        "expected_keywords": [],
+        "detected_emotion": "anxious",
+        "scores": {
+          "keyword_score": 1.0,
+          "emotion_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": true
+      },
+      {
+        "case_id": "A2-13",
+        "case_name": "怀旧情绪",
+        "category": "nostalgia",
+        "test_input": "今天路过大学母校，好多回忆啊，有点想念那时候的日子",
+        "response": "嘿嘿，校园时光总是让人怀念呢！能和我说说有哪些难忘的回忆呀？",
+        "expected_keywords": [],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": true
+      },
+      {
+        "case_id": "A2-14",
+        "case_name": "情感记忆联动",
+        "category": "emotional_memory",
+        "test_input": "你还记得我刚才的心情吗？",
+        "response": "我记得呀，你刚才说心情特别差呢，能和我说说具体是因为什么事不开心吗？",
+        "expected_keywords": [
+          "心情差",
+          "不好",
+          "不开心"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我今天心情特别差",
+            "response": "怎么啦，是什么事让你这么不开心呀？我在这里陪着你呢！"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A2-15",
+        "case_name": "共情能力-感同身受",
+        "category": "empathy",
+        "test_input": "我奶奶前几天去世了...",
+        "response": "怎么啦，听到这个消息好心疼你呀！我会一直陪着你的！",
+        "expected_keywords": [],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": true
+      }
+    ]
+  }
+}

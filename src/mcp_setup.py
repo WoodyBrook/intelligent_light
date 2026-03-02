@@ -7,7 +7,7 @@ async def setup_mcp_priority_scenarios():
     """
     mcp = get_mcp_manager()
     
-    print("🚀 正在配置 MCP 优先场景...")
+    print("正在配置 MCP 优先场景...")
 
     # 1. 配置 OAuth 客户端 (需要用户填入自己的 ID/Secret)
     # 场景 1.1 & 1.3: Google 服务
@@ -68,11 +68,11 @@ async def setup_mcp_priority_scenarios():
     print("\n--- 配置内容服务 (场景 4.1 & 4.2: 音乐推荐 & 新闻推送) ---")
     
     # 场景 4.1: 音乐推荐
-    print("\n🎵 初始化音乐推荐器...")
+    print("\n初始化音乐推荐器...")
     mcp.setup_music_recommender()
     
     # 场景 4.2: 新闻聚合
-    print("\n📰 初始化新闻聚合器...")
+    print("\n初始化新闻聚合器...")
     user_interests = ["AI", "科技", "人工智能"]  # 示例兴趣
     mcp.setup_news_aggregator(user_interests)
     
@@ -80,7 +80,7 @@ async def setup_mcp_priority_scenarios():
     # mcp.add_news_feed("tech", "https://www.36kr.com/feed")
     # mcp.add_news_feed("science", "https://www.guokr.com/rss/")
     
-    print("\n✅ MCP 配置完成。")
+    print("\nMCP 配置完成。")
     print("   - OAuth 服务：请在 mcp_tokens.json 中填入有效的 Token 或运行授权流程")
     print("   - IMAP 邮箱：使用 add_email_provider() 方法添加 163、QQ、Outlook 邮箱")
     print("   - 音乐推荐：已初始化，可通过对话触发（如：'推荐一首歌'）")

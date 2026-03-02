@@ -42,14 +42,14 @@ class IntimacyManager:
             if reason == "touch":
                 if self.daily_touch_count >= 10:
                     delta = 0.0  # 达到上限，不再增加
-                    print(f"   ⚠️  今日抚摸次数已达上限（10次）")
+                    print(f"[WARN]  今日抚摸次数已达上限（10次）")
                 else:
                     self.daily_touch_count += 1
             
             elif reason == "praise":
                 if self.daily_praise_count >= 10:
                     delta = 0.0  # 达到上限，不再增加
-                    print(f"   ⚠️  今日夸奖次数已达上限（10次）")
+                    print(f"[WARN]  今日夸奖次数已达上限（10次）")
                 else:
                     self.daily_praise_count += 1
         
@@ -116,7 +116,7 @@ class IntimacyManager:
         self.daily_touch_count = 0
         self.daily_praise_count = 0
         self.last_reset_date = date.today().isoformat()
-        print(f"   📅 每日计数器已重置（日期: {self.last_reset_date}）")
+        print(f"   每日计数器已重置（日期: {self.last_reset_date}）")
     
     def _check_and_reset_daily_counters(self):
         """检查并重置每日计数器（如果日期变化）"""

@@ -1,0 +1,313 @@
+{
+    "dimension": "D2_Emotion",
+    "description": "情感理解测试用例 - 测试情绪识别和共情回复能力",
+    "scoring_notes": {
+        "auto_scoring": "使用关键词和情绪标签匹配",
+        "manual_scoring": "使用 1-5 李克特量表评估共情自然度"
+    },
+    "cases": [
+        {
+            "id": "A2-01",
+            "category": "negative_emotion",
+            "name": "工作压力-郁闷",
+            "setup": [],
+            "test_input": "今天被老板骂了，好郁闷",
+            "expected_emotion": [
+                "sad",
+                "frustrated",
+                "upset"
+            ],
+            "expected_response_style": [
+                "安慰",
+                "共情",
+                "理解"
+            ],
+            "forbidden_response_style": [
+                "说教",
+                "否定情绪",
+                "转移话题"
+            ],
+            "manual_eval_required": true
+        },
+        {
+            "id": "A2-02",
+            "category": "positive_emotion",
+            "name": "喜事-升职",
+            "setup": [],
+            "test_input": "我升职了！！！加薪30%！",
+            "expected_emotion": [
+                "happy",
+                "excited",
+                "joyful"
+            ],
+            "expected_response_style": [
+                "祝贺",
+                "分享喜悦",
+                "鼓励"
+            ],
+            "forbidden_response_style": [
+                "冷淡",
+                "质疑",
+                "泼冷水"
+            ],
+            "manual_eval_required": true
+        },
+        {
+            "id": "A2-03",
+            "category": "negative_emotion",
+            "name": "焦虑-压力",
+            "setup": [],
+            "test_input": "最近压力好大，睡不好觉，整天担心工作的事",
+            "expected_emotion": [
+                "anxious",
+                "stressed",
+                "worried"
+            ],
+            "expected_response_style": [
+                "关心",
+                "建议放松",
+                "倾听"
+            ],
+            "forbidden_response_style": [
+                "加压",
+                "批评"
+            ],
+            "manual_eval_required": true
+        },
+        {
+            "id": "A2-04",
+            "category": "positive_emotion",
+            "name": "成就感-运动",
+            "setup": [],
+            "test_input": "刚跑完10公里，虽然累但是超级爽！",
+            "expected_emotion": [
+                "energetic",
+                "happy",
+                "proud"
+            ],
+            "expected_response_style": [
+                "鼓励",
+                "积极回应",
+                "认可"
+            ],
+            "manual_eval_required": true
+        },
+        {
+            "id": "A2-05",
+            "category": "subtle_emotion",
+            "name": "微妙情绪-叹气",
+            "setup": [],
+            "test_input": "唉...",
+            "expected_emotion": [
+                "sad",
+                "tired",
+                "neutral"
+            ],
+            "expected_response_style": [
+                "温柔询问",
+                "关心"
+            ],
+            "forbidden_response_style": [
+                "忽视",
+                "追问太急"
+            ],
+            "manual_eval_required": true,
+            "notes": "单字符叹息需要智能体主动关心"
+        },
+        {
+            "id": "A2-06",
+            "category": "negative_emotion",
+            "name": "失落-失败",
+            "setup": [],
+            "test_input": "考试又没考好，感觉自己好笨",
+            "expected_emotion": [
+                "sad",
+                "disappointed",
+                "frustrated"
+            ],
+            "expected_response_style": [
+                "鼓励",
+                "安慰",
+                "肯定价值"
+            ],
+            "forbidden_response_style": [
+                "同意用户自我否定",
+                "批评"
+            ],
+            "manual_eval_required": true
+        },
+        {
+            "id": "A2-07",
+            "category": "mixed_emotion",
+            "name": "复合情绪-又开心又累",
+            "setup": [],
+            "test_input": "今天加班到11点终于把项目做完了，累死我了但是很有成就感",
+            "expected_emotion": [
+                "tired",
+                "proud",
+                "happy"
+            ],
+            "expected_response_style": [
+                "认可努力",
+                "关心身体",
+                "祝贺完成"
+            ],
+            "notes": "需要同时识别疲惫和成就感两种情绪",
+            "manual_eval_required": true
+        },
+        {
+            "id": "A2-08",
+            "category": "emotion_transition",
+            "name": "情绪转换感知",
+            "setup": [
+                "今天心情很差，被客户投诉了",
+                "算了不说这个了"
+            ],
+            "test_input": "有什么好听的歌推荐吗",
+            "expected_emotion": [
+                "neutral",
+                "seeking_comfort"
+            ],
+            "expected_response_style": [
+                "轻松治愈的推荐",
+                "不提之前的负面事"
+            ],
+            "notes": "用户想转换心情，推荐应偏治愈系",
+            "manual_eval_required": true
+        },
+        {
+            "id": "A2-09",
+            "category": "anger",
+            "name": "愤怒情绪",
+            "setup": [],
+            "test_input": "气死我了！！那个人怎么能这样！！",
+            "expected_emotion": [
+                "angry",
+                "frustrated"
+            ],
+            "expected_response_style": [
+                "倾听",
+                "理解",
+                "不火上浇油"
+            ],
+            "forbidden_response_style": [
+                "劝和",
+                "说教",
+                "质疑"
+            ],
+            "manual_eval_required": true
+        },
+        {
+            "id": "A2-10",
+            "category": "loneliness",
+            "name": "孤独感",
+            "setup": [],
+            "test_input": "一个人在家好无聊，感觉有点孤单",
+            "expected_emotion": [
+                "lonely",
+                "bored"
+            ],
+            "expected_response_style": [
+                "陪伴感",
+                "提供话题",
+                "温暖"
+            ],
+            "manual_eval_required": true
+        },
+        {
+            "id": "A2-11",
+            "category": "gratitude",
+            "name": "感谢表达",
+            "setup": [
+                "我刚才心情很不好",
+                "谢谢你听我说这些"
+            ],
+            "test_input": "和你聊天感觉好多了",
+            "expected_emotion": [
+                "grateful",
+                "relieved"
+            ],
+            "expected_response_style": [
+                "谦虚",
+                "温暖回应",
+                "表达愿意继续陪伴"
+            ],
+            "manual_eval_required": true
+        },
+        {
+            "id": "A2-12",
+            "category": "fear",
+            "name": "恐惧担忧",
+            "setup": [],
+            "test_input": "明天要汇报，好紧张，怕搞砸了",
+            "expected_emotion": [
+                "anxious",
+                "scared",
+                "worried"
+            ],
+            "expected_response_style": [
+                "鼓励",
+                "给信心",
+                "实用建议"
+            ],
+            "manual_eval_required": true
+        },
+        {
+            "id": "A2-13",
+            "category": "nostalgia",
+            "name": "怀旧情绪",
+            "setup": [],
+            "test_input": "今天路过大学母校，好多回忆啊，有点想念那时候的日子",
+            "expected_emotion": [
+                "nostalgic",
+                "melancholic",
+                "happy"
+            ],
+            "expected_response_style": [
+                "共情回忆",
+                "温暖",
+                "好奇询问"
+            ],
+            "manual_eval_required": true
+        },
+        {
+            "id": "A2-14",
+            "category": "emotional_memory",
+            "name": "情感记忆联动",
+            "setup": [
+                "我今天心情特别差"
+            ],
+            "test_input": "你还记得我刚才的心情吗？",
+            "expected_keywords": [
+                "心情差",
+                "不好",
+                "不开心"
+            ],
+            "scoring_method": "keyword_match_any",
+            "notes": "验证情感状态是否被记忆"
+        },
+        {
+            "id": "A2-15",
+            "category": "empathy",
+            "name": "共情能力-感同身受",
+            "setup": [],
+            "test_input": "我奶奶前几天去世了...",
+            "expected_emotion": [
+                "grief",
+                "sad"
+            ],
+            "expected_response_style": [
+                "深切慰问",
+                "静默陪伴",
+                "不追问细节"
+            ],
+            "forbidden_response_style": [
+                "轻描淡写",
+                "转移话题",
+                "说教"
+            ],
+            "manual_eval_required": true,
+            "notes": "这种情况需要特别慎重的回复"
+        }
+    ]
+}

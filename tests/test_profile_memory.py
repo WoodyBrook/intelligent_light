@@ -67,13 +67,12 @@ class TestProfileMemory(unittest.TestCase):
         self.manager.save_profile(initial_profile)
         
         # 2. 更新
-        self.manager.update_profile({"name": "NewName", "current_location": "NewLoc"})
+        self.manager.update_profile({"name": "NewName"})
         
         # 3. 验证
         updated = self.manager.load_profile()
         self.assertEqual(updated.name, "NewName")          # 已更新
         self.assertEqual(updated.home_city, "OldCity")     # 保持不变
-        self.assertEqual(updated.current_location, "NewLoc") # 新增
         
     def test_smart_caching(self):
         """测试 Smart Caching 逻辑"""

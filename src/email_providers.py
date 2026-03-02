@@ -52,10 +52,10 @@ class EmailProvider:
             
             self.connection.login(self.config.username, self.config.password)
             self.connection.select('INBOX')
-            logger.info(f"✅ 成功连接到 {self.config.provider} 邮箱")
+            logger.info(f"成功连接到 {self.config.provider} 邮箱")
             return True
         except Exception as e:
-            logger.error(f"❌ 连接 {self.config.provider} 邮箱失败: {e}")
+            logger.error(f"[ERROR] 连接 {self.config.provider} 邮箱失败: {e}")
             return False
     
     def disconnect(self):

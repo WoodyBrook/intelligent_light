@@ -55,10 +55,10 @@ def get_weather(city: str = "北京", days: int = 0) -> str:
             geo_response = requests.get(geo_url, params=geo_params, headers=headers, timeout=5)
             
             if geo_response.status_code != 200:
-                print(f"⚠️ GeoAPI HTTP错误: {geo_response.status_code} - {geo_response.text}")
+                print(f"[WARN] GeoAPI HTTP错误: {geo_response.status_code} - {geo_response.text}")
                 # 尝试备用 Geo Host (如果首选失败且不是 404/403 等业务明确拒绝)
                 if api_host != "geoapi.qweather.com" and "devapi" not in api_host:
-                    print("   🔄 尝试回退到通用 GeoAPI Host...")
+                    print("   尝试回退到通用 GeoAPI Host...")
                     fallback_url = "https://geoapi.qweather.com/v2/city/lookup"
                     geo_response = requests.get(fallback_url, params=geo_params, headers=headers, timeout=5)
 
@@ -66,7 +66,7 @@ def get_weather(city: str = "北京", days: int = 0) -> str:
                 geo_data = geo_response.json()
                 
                 if geo_data.get("code") != "200":
-                     print(f"⚠️ GeoAPI 业务错误: {geo_data.get('code')} - {geo_data}")
+                     print(f"[WARN] GeoAPI 业务错误: {geo_data.get('code')} - {geo_data}")
                 
                 if geo_data.get("code") == "200" and geo_data.get("location"):
                     location_id = geo_data["location"][0]["id"]
@@ -90,13 +90,13 @@ def get_weather(city: str = "北京", days: int = 0) -> str:
                         weather_response = requests.get(weather_url, params=weather_params, headers=headers, timeout=5)
                         
                         if weather_response.status_code != 200:
-                            print(f"⚠️ WeatherAPI HTTP错误: {weather_response.status_code} - {weather_response.text}")
+                            print(f"[WARN] WeatherAPI HTTP错误: {weather_response.status_code} - {weather_response.text}")
 
                         if weather_response.status_code == 200:
                             weather_data = weather_response.json()
                             
                             if weather_data.get("code") != "200":
-                                print(f"⚠️ WeatherAPI 业务错误: {weather_data.get('code')} - {weather_data}")
+                                print(f"[WARN] WeatherAPI 业务错误: {weather_data.get('code')} - {weather_data}")
 
                             if weather_data.get("code") == "200" and weather_data.get("now"):
                                 now = weather_data["now"]
@@ -134,7 +134,7 @@ def get_weather(city: str = "北京", days: int = 0) -> str:
 风速：{wind_speed} km/h
 建议：{advice}"""
                                 
-                                print(f"🌤️ 获取天气（和风天气-实时）: {location_name}")
+                                print(f"获取天气（和风天气-实时）: {location_name}")
                                 return result
                     else:
                         # 未来天气预报（3天预报）
@@ -148,13 +148,13 @@ def get_weather(city: str = "北京", days: int = 0) -> str:
                         weather_response = requests.get(weather_url, params=weather_params, headers=headers, timeout=5)
 
                         if weather_response.status_code != 200:
-                            print(f"⚠️ WeatherAPI HTTP错误: {weather_response.status_code} - {weather_response.text}")
+                            print(f"[WARN] WeatherAPI HTTP错误: {weather_response.status_code} - {weather_response.text}")
                         
                         if weather_response.status_code == 200:
                             weather_data = weather_response.json()
 
                             if weather_data.get("code") != "200":
-                                print(f"⚠️ WeatherAPI 业务错误: {weather_data.get('code')} - {weather_data}")
+                                print(f"[WARN] WeatherAPI 业务错误: {weather_data.get('code')} - {weather_data}")
                             
                             if weather_data.get("code") == "200" and weather_data.get("daily"):
                                 daily_list = weather_data["daily"]
@@ -218,15 +218,15 @@ def get_weather(city: str = "北京", days: int = 0) -> str:
 降水：{precip}mm
 建议：{advice}"""
                                     
-                                    print(f"🌤️ 获取天气（和风天气-{date_str}）: {location_name}")
+                                    print(f"获取天气（和风天气-{date_str}）: {location_name}")
                                     return result
                                 else:
                                     return f"抱歉，无法获取{days}天后的天气预报（最多支持3天）"
             
             # 如果API调用失败，降级到模拟数据
-            print(f"⚠️ 和风天气API调用失败，使用模拟数据")
+            print(f"[WARN] 和风天气API调用失败，使用模拟数据")
         else:
-            print("⚠️ 未配置 QWEATHER_API_KEY，使用模拟天气数据")
+            print("[WARN] 未配置 QWEATHER_API_KEY，使用模拟天气数据")
         
         # 降级方案：使用模拟数据
         mock_weather = {
@@ -269,11 +269,11 @@ def get_weather(city: str = "北京", days: int = 0) -> str:
 风力：{weather_data['wind']}
 建议：{weather_data['advice']}"""
 
-        print(f"🌤️ 获取天气（模拟）: {city}")
+        print(f"获取天气（模拟）: {city}")
         return result
 
     except Exception as e:
-        print(f"❌ 天气查询失败: {e}")
+        print(f"[ERROR] 天气查询失败: {e}")
         return f"抱歉，获取{city}天气信息失败了：{str(e)}"
 
 
@@ -305,12 +305,12 @@ def get_air_quality(city: str = "北京", days: int = 0) -> str:
         geo_response = requests.get(geo_url, params=geo_params, headers=headers, timeout=5)
         
         if geo_response.status_code != 200:
-            print(f"⚠️ GeoAPI HTTP错误: {geo_response.status_code}")
+            print(f"[WARN] GeoAPI HTTP错误: {geo_response.status_code}")
             return f"抱歉，无法获取{city}的位置信息。"
         
         geo_data = geo_response.json()
         if geo_data.get("code") != "200" or not geo_data.get("location"):
-            print(f"⚠️ GeoAPI 业务错误: {geo_data.get('code')}")
+            print(f"[WARN] GeoAPI 业务错误: {geo_data.get('code')}")
             return f"抱歉，无法找到城市：{city}"
         
         location_info = geo_data["location"][0]
@@ -319,7 +319,7 @@ def get_air_quality(city: str = "北京", days: int = 0) -> str:
         latitude = location_info["lat"]
         longitude = location_info["lon"]
         
-        print(f"📍 城市定位: {location_name} (ID:{location_id}, {latitude}, {longitude})")
+        print(f"城市定位: {location_name} (ID:{location_id}, {latitude}, {longitude})")
         
         # 步骤2：使用新版 API v1 获取空气质量（使用经纬度）
         try:
@@ -334,14 +334,14 @@ def get_air_quality(city: str = "北京", days: int = 0) -> str:
             air_response = requests.get(air_url, headers=headers, timeout=5)
             
             if air_response.status_code != 200:
-                print(f"⚠️ AirAPI v1 HTTP错误: {air_response.status_code} - {air_response.text[:200]}")
+                print(f"[WARN] AirAPI v1 HTTP错误: {air_response.status_code} - {air_response.text[:200]}")
                 return f"抱歉，获取空气质量信息失败（HTTP {air_response.status_code}）。"
             
             air_data = air_response.json()
             
             # 新版 API 响应结构：indexes + pollutants
             if "error" in air_data:
-                print(f"⚠️ AirAPI v1 业务错误: {air_data}")
+                print(f"[WARN] AirAPI v1 业务错误: {air_data}")
                 return f"抱歉，获取空气质量信息失败。"
             
             # 解析新版 API 响应 - 从 indexes 数组获取 AQI
@@ -433,13 +433,13 @@ O₃：{o3} μg/m³
             air_response = requests.get(air_url, params=air_params, headers=headers, timeout=5)
             
             if air_response.status_code != 200:
-                print(f"⚠️ AirAPI v7 Daily HTTP错误: {air_response.status_code}")
+                print(f"[WARN] AirAPI v7 Daily HTTP错误: {air_response.status_code}")
                 return f"抱歉，暂时无法获取空气质量预报，可以先看看现在的空气质量哦~"
             
             air_data = air_response.json()
             
             if air_data.get("code") != "200" or not air_data.get("daily"):
-                print(f"⚠️ AirAPI v7 Daily 业务错误: {air_data.get('code')}")
+                print(f"[WARN] AirAPI v7 Daily 业务错误: {air_data.get('code')}")
                 return f"抱歉，暂时无法获取空气质量预报，可以先看看现在的空气质量哦~"
             
             daily_list = air_data["daily"]
@@ -447,7 +447,7 @@ O₃：{o3} μg/m³
             # 确保 days 不超过预报范围
             if days >= len(daily_list):
                 days = len(daily_list) - 1
-                print(f"   ⚠️ 预报天数超限，调整为 {days}")
+                print(f"[WARN] 预报天数超限，调整为 {days}")
             
             forecast = daily_list[days]
             
@@ -496,13 +496,13 @@ O₃：{o3} μg/m³
             return result
     
     except Exception as e:
-        print(f"❌ 空气质量查询失败: {e}")
+        print(f"[ERROR] 空气质量查询失败: {e}")
         import traceback
         traceback.print_exc()
         return f"抱歉，获取{city}空气质量信息失败了：{str(e)}"
 
 
-def get_news(keyword: str = "", category: str = "", limit: int = 5) -> str:
+def get_news(keyword: str = "", category: str = "", limit: int = 5, use_doubao_summary: bool = True) -> str:
     """
     获取新闻信息 - 直接使用百度搜索 API
     无需维护 RSS 源，稳定可靠
@@ -511,6 +511,7 @@ def get_news(keyword: str = "", category: str = "", limit: int = 5) -> str:
         keyword: 搜索关键词（如"人工智能"、"特斯拉"）
         category: 新闻分类（tech/sports/entertainment/finance/general）
         limit: 返回条数（默认5条）
+        use_doubao_summary: 是否使用豆包生成摘要（默认True）
     """
     try:
         # 构建搜索查询
@@ -537,15 +538,48 @@ def get_news(keyword: str = "", category: str = "", limit: int = 5) -> str:
         
         search_query = " ".join(search_parts) + " 最新新闻"
         
-        print(f"📰 获取新闻: category='{category}', keyword='{keyword}' -> 搜索: '{search_query}'")
+        print(f"获取新闻: category='{category}', keyword='{keyword}' -> 搜索: '{search_query}'")
         
         # 调用 web_search 获取新闻
         result = web_search(search_query, max_results=limit)
         
+        # 如果搜索成功且启用了豆包摘要，使用豆包生成摘要
+        if result and "搜索结果" in result and use_doubao_summary:
+            try:
+                print(f"   [豆包摘要] 使用豆包生成新闻摘要...")
+                
+                # 导入豆包模型
+                from .model_manager import get_model_manager
+                
+                model_manager = get_model_manager()
+                chat_llm = model_manager.chat_llm  # 使用豆包 1.5 Pro
+                
+                # 构建摘要 prompt
+                summary_prompt = f"""你是一个新闻助手。请根据以下搜索到的新闻内容，为用户生成一个简洁明了的中文摘要（100-200字），回答用户关于"{keyword}"的问题。
+
+新闻内容:
+{result}
+
+请生成摘要："""
+
+                # 调用豆包生成摘要
+                response = chat_llm.invoke(summary_prompt)
+                summary = response.content.strip()
+                
+                print(f"   [豆包摘要] 生成成功，摘要长度: {len(summary)} 字")
+                
+                # 返回豆包生成的摘要
+                return f"📰 **{keyword}** 相关新闻摘要：\n\n{summary}\n\n---\n*信息来源：网络搜索*"
+                
+            except Exception as e:
+                print(f"   [豆包摘要] 生成失败: {e}，回退到原始搜索结果")
+                # 如果豆包摘要失败，回退到原始搜索结果
+                pass
+        
         # 如果搜索成功，美化输出格式
         if result and "搜索结果" in result:
             # 替换标题前缀
-            header = f"📰 最新新闻"
+            header = f"最新新闻"
             if category and category in category_map:
                 header += f"【{category_map[category]}】"
             if keyword and keyword not in category_map.get(category, ""):
@@ -553,12 +587,12 @@ def get_news(keyword: str = "", category: str = "", limit: int = 5) -> str:
             header += "：\n"
             
             # 将 web_search 结果的标题替换
-            result = result.replace(f"🔍 搜索结果（{search_query}）：", header)
+            result = result.replace(f"搜索结果（{search_query}）：", header)
         
         return result
 
     except Exception as e:
-        print(f"❌ 新闻查询失败: {e}")
+        print(f"[ERROR] 新闻查询失败: {e}")
         return f"抱歉，获取新闻信息失败了：{str(e)}"
 
 
@@ -589,8 +623,18 @@ def get_time_info(timezone: str = "北京") -> str:
         return result
 
     except Exception as e:
-        print(f"❌ 时间查询失败: {e}")
-        return "抱歉，获取时间信息失败了。"
+        print(f"[ERROR] 时间查询失败: {e}")
+        # P0 Backup: 使用系统时间作为硬备份
+        try:
+            now = datetime.now()
+            time_str = now.strftime("%Y年%m月%d日 %H:%M:%S")
+            weekday = ["一", "二", "三", "四", "五", "六", "日"][now.weekday()]
+            print(f"   使用系统时间硬备份: {time_str}")
+            return f"🕐 当前时间：{time_str}（星期{weekday}）"
+        except Exception as backup_error:
+            # 最后的硬备份：即使datetime.now()也失败（几乎不可能）
+            print(f"[WARN] 系统时间硬备份也失败: {backup_error}")
+            return "🕐 抱歉，无法获取准确时间"
 
 
 def calculate_math(expression: str) -> str:
@@ -610,7 +654,7 @@ def calculate_math(expression: str) -> str:
         return f"🧮 计算结果：{expression} = {result}"
 
     except Exception as e:
-        print(f"❌ 数学计算失败: {e}")
+        print(f"[ERROR] 数学计算失败: {e}")
         return f"抱歉，无法计算 '{expression}'。请检查表达式是否正确。"
 
 
@@ -631,7 +675,7 @@ def search_wikipedia(query: str) -> str:
         return f"📖 维基百科：{query}\n{result}"
 
     except Exception as e:
-        print(f"❌ 维基搜索失败: {e}")
+        print(f"[ERROR] 维基搜索失败: {e}")
         return "抱歉，维基百科搜索失败了。"
 
 
@@ -681,7 +725,7 @@ def web_search(query: str, max_results: int = 5) -> str:
             ]
         }
         
-        print(f"🔍 网络搜索: {query}")
+        print(f"网络搜索: {query}")
         
         # 发送请求
         response = requests.post(
@@ -702,7 +746,7 @@ def web_search(query: str, max_results: int = 5) -> str:
                 error_msg = error_info
                 error_code = response.status_code
             
-            print(f"❌ 网络搜索API错误: HTTP {response.status_code}, Code: {error_code}, Message: {error_msg}")
+            print(f"[ERROR] 网络搜索API错误: HTTP {response.status_code}, Code: {error_code}, Message: {error_msg}")
             
             if response.status_code == 401 or "Authentication" in error_msg:
                 return "抱歉，网络搜索 API Key 无效或已过期。请检查 BAIDU_SEARCH_API_KEY 环境变量。"
@@ -743,19 +787,19 @@ def web_search(query: str, max_results: int = 5) -> str:
             formatted_results.append(result_item)
         
         results_text = "\n\n".join(formatted_results)
-        return f"🔍 搜索结果（{query}）：\n\n{results_text}"
+        return f"搜索结果（{query}）：\n\n{results_text}"
         
     except requests.exceptions.Timeout:
-        print(f"❌ 网络搜索超时")
+        print(f"[ERROR] 网络搜索超时")
         return "抱歉，网络搜索请求超时，请稍后再试。"
     except requests.exceptions.RequestException as e:
-        print(f"❌ 网络搜索网络错误: {e}")
+        print(f"[ERROR] 网络搜索网络错误: {e}")
         return f"抱歉，网络搜索网络请求失败：{str(e)}"
     except json.JSONDecodeError as e:
-        print(f"❌ 网络搜索响应解析失败: {e}")
+        print(f"[ERROR] 网络搜索响应解析失败: {e}")
         return "抱歉，网络搜索响应格式错误，请稍后再试。"
     except Exception as e:
-        print(f"❌ 网络搜索失败: {e}")
+        print(f"[ERROR] 网络搜索失败: {e}")
         return f"抱歉，网络搜索失败了：{str(e)}"
 
 
@@ -786,7 +830,7 @@ def air_quality_tool(city: str, days: int = 0) -> str:
     return get_air_quality(city, days)
 
 @tool
-def news_tool(keyword: str = "", category: str = "", limit: int = 5) -> str:
+def news_tool(keyword: str = "", category: str = "", limit: int = 5, use_doubao_summary: bool = True) -> str:
     """
     获取最新新闻信息
     
@@ -794,8 +838,9 @@ def news_tool(keyword: str = "", category: str = "", limit: int = 5) -> str:
         keyword: 搜索关键词（如"人工智能"、"特斯拉"、"NBA"）
         category: 新闻分类，可选值：tech(科技), sports(体育), entertainment(娱乐), finance(财经), general(时事)
         limit: 返回条数，默认5条
+        use_doubao_summary: 是否使用豆包生成摘要（默认True），使用后可跳过后续的reasoning节点
     """
-    return get_news(keyword, category, limit)
+    return get_news(keyword, category, limit, use_doubao_summary)
 
 @tool
 def time_tool(timezone: str = "北京") -> str:
@@ -835,7 +880,7 @@ def update_profile_tool(updates: str) -> str:
     if not isinstance(data, dict):
         return "错误：updates 解析后必须是字典"
 
-    from nodes import get_memory_manager
+    from .nodes import get_memory_manager
     manager = get_memory_manager()
     
     # 直接传递字典给 manager.update_profile，manager 会负责校验字段
@@ -879,17 +924,21 @@ def create_schedule_tool(
     datetime_ts: float,
     schedule_type: str = "reminder",
     reminder_minutes: int = None,
-    description: str = ""
+    description: str = "",
+    recurrence_type: str = None,
+    recurrence_value: int = None
 ) -> str:
     """
-    创建日程、提醒、待办事项或注意事项。
+    创建日程、提醒、待办事项或注意事项。支持循环事件。
     
     Args:
         title: 标题
-        datetime_ts: 时间戳（Unix timestamp），note 类型可为 None
+        datetime_ts: 时间戳（Unix timestamp），循环事件为首次发生时间
         schedule_type: 类型 "schedule" | "reminder" | "todo" | "note"
         reminder_minutes: 提前提醒分钟数（仅 schedule 有效，默认15）
         description: 描述（可选）
+        recurrence_type: 循环类型 "daily" | "weekly" | "monthly" | "yearly" | None
+        recurrence_value: 循环值：weekly时为周几(0=周一,6=周日)，monthly时为每月几号(1-31)，yearly时不需要此参数
     """
     from .schedule_manager import get_schedule_manager
     manager = get_schedule_manager()
@@ -899,11 +948,37 @@ def create_schedule_tool(
         reminder_minutes = reminder_minutes if reminder_minutes is not None else 15
     else:
         reminder_minutes = 0
-        
-    item = manager.add_schedule(title, datetime_ts, schedule_type, reminder_minutes, description)
+    
+    # 构建 recurrence 字典
+    recurrence = None
+    if recurrence_type:
+        recurrence = {
+            "type": recurrence_type,
+            "interval": 1
+        }
+        if recurrence_type == "weekly" and recurrence_value is not None:
+            recurrence["days_of_week"] = [recurrence_value]
+        elif recurrence_type == "monthly" and recurrence_value is not None:
+            recurrence["day_of_month"] = recurrence_value
+    
+    item = manager.add_schedule(title, datetime_ts, schedule_type, reminder_minutes, description, recurrence)
     
     time_str = datetime.fromtimestamp(datetime_ts).strftime("%Y-%m-%d %H:%M") if datetime_ts else "无"
-    return f"已创建{schedule_type}: {title}, 时间: {time_str}, ID: {item['id']}"
+    recurrence_str = ""
+    if recurrence:
+        if recurrence_type == "daily":
+            recurrence_str = " (每天循环)"
+        elif recurrence_type == "weekly":
+            weekday_names = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+            day_name = weekday_names[recurrence_value] if recurrence_value is not None else ""
+            recurrence_str = f" (每{day_name}循环)"
+        elif recurrence_type == "monthly":
+            recurrence_str = f" (每月{recurrence_value}号循环)"
+        elif recurrence_type == "yearly":
+            # yearly 类型使用 datetime_ts 的月份和日期
+            date_obj = datetime.fromtimestamp(datetime_ts)
+            recurrence_str = f" (每年{date_obj.month}月{date_obj.day}号循环)"
+    return f"已创建{schedule_type}: {title}, 时间: {time_str}{recurrence_str}, ID: {item['id']}"
 
 @tool
 def query_schedule_tool(
@@ -934,11 +1009,12 @@ def query_schedule_tool(
     if not schedules:
         return "未找到相关日程"
         
-    res = ["📋 日程列表:"]
+    res = ["日程列表:"]
     for s in schedules:
         time_str = datetime.fromtimestamp(s['datetime']).strftime("%Y-%m-%d %H:%M") if s['datetime'] else "无"
         status = " [已完成]" if s.get('completed') else ""
-        res.append(f"- [{s['type']}] {s['title']} ({time_str}){status} ID: {s['id']}")
+        recurrence_label = " (循环)" if s.get('recurrence') else ""
+        res.append(f"- [{s['type']}] {s['title']} ({time_str}){recurrence_label}{status} ID: {s['id']}")
         
     return "\n".join(res)
 
@@ -1009,7 +1085,7 @@ def countdown_timer_tool(
                 message=final_message,
                 timeout=10
             )
-            print(f"   ✅ 系统通知已发送 (plyer)")
+            print(f"   系统通知已发送 (plyer)")
         except ImportError:
             # 方法2: macOS 原生通知
             try:
@@ -1017,9 +1093,9 @@ def countdown_timer_tool(
                     "osascript", "-e",
                     f'display notification "{final_message}" with title "⏰ Animus 提醒: {title}" sound name "Glass"'
                 ], check=True)
-                print(f"   ✅ 系统通知已发送 (osascript)")
+                print(f"   系统通知已发送 (osascript)")
             except Exception as e:
-                print(f"   ⚠️ 系统通知失败: {e}")
+                print(f"[WARN] 系统通知失败: {e}")
         
         # 清理定时器记录
         _active_timers.pop(timer_id, None)
@@ -1050,7 +1126,7 @@ def countdown_timer_tool(
         time_display = f"{hours}小时{f'{minutes}分钟' if minutes else ''}后"
     
     time_str = trigger_time.strftime("%H:%M:%S")
-    print(f"   ⏱️ 倒计时已启动: {title}, {time_display} ({time_str}) 提醒")
+    print(f"   倒计时已启动: {title}, {time_display} ({time_str}) 提醒")
     
     return f"已设置倒计时提醒: {title}, 将在{time_display}（{time_str}）提醒你, ID: {timer_id}"
 
@@ -1125,7 +1201,7 @@ TOOL_DESCRIPTIONS = {
     "update_profile_tool": "更新用户核心画像，参数：updates (JSON string: {'field': 'value'})",
     "query_user_memory_tool": "检索用户过往记忆，参数：query, max_results",
     "save_user_memory_tool": "保存用户新记忆，参数：content, category",
-    "create_schedule_tool": "创建日程、待办或注意事项（长期，≥30分钟）。参数：title, datetime_ts(时间戳), schedule_type, reminder_minutes, description",
+    "create_schedule_tool": "创建日程、待办、注意事项或重要日期（生日/纪念日）。参数：title, datetime_ts(时间戳), schedule_type, reminder_minutes, description, recurrence_type(daily/weekly/monthly/yearly), recurrence_value(周几0-6或日期1-31)。【重要日期示例】生日用 yearly 循环，recurrence_type='yearly'。",
     "query_schedule_tool": "查询日程。参数：start_ts, end_ts, schedule_type, include_completed(bool)",
     "delete_schedule_tool": "删除指定日程。参数：schedule_id",
     "complete_todo_tool": "标记待办事项为完成。参数：schedule_id",
@@ -1137,7 +1213,7 @@ TOOL_DESCRIPTIONS = {
 
 def get_tool_descriptions() -> str:
     """获取所有工具的描述"""
-    descriptions = ["🔧 可用工具："]
+    descriptions = ["可用工具："]
     for name, desc in TOOL_DESCRIPTIONS.items():
         descriptions.append(f"- {name}: {desc}")
     return "\n".join(descriptions)
@@ -1145,7 +1221,7 @@ def get_tool_descriptions() -> str:
 
 if __name__ == "__main__":
     # 测试工具
-    print("🧪 工具测试：")
+    print("工具测试：")
     print(get_weather("北京"))
     print()
     print(get_time_info("北京"))
@@ -1162,4 +1238,4 @@ if __name__ == "__main__":
         print("--- 测试网络搜索 ---")
         print(web_search("Python教程", 3))
     else:
-        print("⚠️ 跳过新闻和网络搜索测试（未配置 BAIDU_SEARCH_API_KEY）")
+        print("[WARN] 跳过新闻和网络搜索测试（未配置 BAIDU_SEARCH_API_KEY）")

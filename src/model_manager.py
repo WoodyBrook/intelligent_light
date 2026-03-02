@@ -104,10 +104,10 @@ class ModelManager:
             "reasoning": {"calls": 0, "total_time": 0.0, "estimated_tokens": 0}
         }
         
-        print(f"🔧 模型管理器初始化（三级模型）:")
-        print(f"   - ⚡ Fast 模型: {fast_model}")
-        print(f"   - 💬 Chat 模型: {chat_model}")
-        print(f"   - 🧠 Reasoning 模型: {reasoning_model}")
+        print(f"模型管理器初始化（三级模型）:")
+        print(f"   - Fast 模型: {fast_model}")
+        print(f"   - Chat 模型: {chat_model}")
+        print(f"   - Reasoning 模型: {reasoning_model}")
         print(f"   - 默认策略: {default_strategy}")
     
     @property
@@ -148,6 +148,26 @@ class ModelManager:
                 timeout=60  # Reasoning 模型可能需要更长时间
             )
         return self._reasoning_llm
+    
+    def get_model(self, model_type: ModelTier) -> ChatOpenAI:
+        """
+        根据类型直接获取模型实例
+        
+        Args:
+            model_type: "fast" | "chat" | "reasoning"
+            
+        Returns:
+            对应的 ChatOpenAI 实例
+        """
+        if model_type == "fast":
+            return self.fast_llm
+        elif model_type == "chat":
+            return self.chat_llm
+        elif model_type == "reasoning":
+            return self.reasoning_llm
+        else:
+            # 默认为 chat
+            return self.chat_llm
     
     def select_model(
         self,
@@ -226,88 +246,41 @@ class ModelManager:
         if has_tools:
             return "reasoning"
         
-        input_lower = user_input.lower().strip()
-        
-        # === 2. 超简单输入 → fast ===
-        for pattern in self.FAST_PATTERNS:
-            if re.match(pattern, input_lower, re.IGNORECASE):
-                return "fast"
-        
-        # === 3. 复杂任务关键词 → reasoning ===
-        complex_keywords = [
-            "分析", "解释", "为什么", "如何", "怎么", "计划", "策略",
-            "比较", "对比", "总结", "归纳", "推理", "判断", "评估",
-            "analyze", "explain", "why", "how", "plan", "strategy",
-            "compare", "summarize", "reason", "judge", "evaluate"
-        ]
-        if any(kw in input_lower for kw in complex_keywords):
-            return "reasoning"
-        
-        # === 4. 条件逻辑关键词 → reasoning ===
-        conditional_patterns = [
-            r"如果.+",
-            r"当(?!然).+",
-            r"若(?!是).+",
-            r"要是.+",
-            r"假如.+",
-            r"万一.+",
-            r"\bif\b.+",
-            r"\bwhen\b.+",
-            r"\bunless\b.+",
-        ]
-        for pattern in conditional_patterns:
-            if re.search(pattern, input_lower, re.IGNORECASE):
+        # === 2. 模型意图分类（Doubao Lite） ===
+        try:
+            # 使用 Fast 模型进行分类
+            classifier_prompt = """You are an Intent Classifier. Classify user intent into:
+- FAST: Greetings (Hi, Hello), Simple confirmations (OK, Yes), Thanks/Bye, Very short non-logic replies.
+- CHAT: Casual conversation, emotional support, sharing feelings, open-ended chit-chat.
+- REASONING: Complex tasks, logical reasoning, detailed planning, specific factual queries (Search/Time/Weather), coding, math, "how to", "why".
+
+User Input: "{input}"
+
+Output JSON only: {{"tier": "fast"|"chat"|"reasoning", "reason": "..."}}"""
+            
+            from langchain_core.prompts import ChatPromptTemplate
+            from langchain_core.output_parsers import JsonOutputParser
+            
+            prompt = ChatPromptTemplate.from_template(classifier_prompt)
+            chain = prompt | self.fast_llm | JsonOutputParser()
+            
+            result = chain.invoke({"input": user_input})
+            
+            tier = result.get("tier", "chat").lower()
+            reason = result.get("reason", "unknown")
+            
+            # 记录分类结果（用于调试）
+            print(f"   路由分类: {tier.upper()} (理由: {reason})")
+            
+            if tier in ["fast", "chat", "reasoning"]:
+                return tier
+            return "chat" # 默认回退
+            
+        except Exception as e:
+            # 降级策略
+            print(f"[WARN] 路由分类失败: {e}，回退到默认策略")
+            if self.default_strategy == "conservative":
                 return "reasoning"
-        
-        # === 5. 多步骤任务关键词 → reasoning ===
-        multi_step_patterns = [
-            r"然后.+",
-            r"之后.+",
-            r"接着.+",
-            r"再(?!见).+",
-            r"并且.+",
-            r"同时.+",
-            r"先.+然后",
-            r"最后.+",
-            r"\bthen\b",
-            r"\bafter\b",
-            r"\bfirst\b.+\bthen\b",
-            r"\bfinally\b",
-        ]
-        for pattern in multi_step_patterns:
-            if re.search(pattern, input_lower, re.IGNORECASE):
-                return "reasoning"
-        
-        # === 6. 工具相关关键词 → reasoning ===
-        tool_keywords = [
-            "查", "搜", "播放", "音乐", "天气", "时间", "几点",
-            "提醒", "定时", "闹钟", "日程", "邮件", "新闻"
-        ]
-        if any(kw in input_lower for kw in tool_keywords):
-            return "reasoning"
-        
-        # === 7. 长对话历史 → reasoning ===
-        if conversation_history:
-            conversation_count = sum(
-                1 for conv in conversation_history
-                if isinstance(conv, dict) and conv.get("type") == "conversation"
-            )
-            if conversation_count > 5:
-                return "reasoning"
-        
-        # === 8. 情感/闲聊场景 → chat ===
-        emotion_keywords = [
-            "累", "开心", "难过", "伤心", "烦", "无聊", "想你",
-            "喜欢", "爱", "讨厌", "害怕", "紧张", "焦虑", "压力",
-            "心情", "感觉", "觉得", "想", "希望"
-        ]
-        if any(kw in input_lower for kw in emotion_keywords):
-            return "chat"
-        
-        # === 9. 默认策略 ===
-        if self.default_strategy == "conservative":
-            return "reasoning"
-        else:
             return "chat"
     
     def get_model_tier(self, model_name: str) -> ModelTier:
@@ -418,24 +391,24 @@ class ModelManager:
         stats = self.get_stats()
         
         print("\n" + "=" * 60)
-        print("📊 模型调用统计报告（三级模型）")
+        print("模型调用统计报告（三级模型）")
         print("=" * 60)
         
-        print(f"\n⚡ Fast 模型 ({self.fast_model_name}):")
+        print(f"\nFast 模型 ({self.fast_model_name}):")
         print(f"   - 调用次数: {stats['fast']['calls']}")
         print(f"   - 总耗时: {stats['fast']['total_time']:.3f}s")
         print(f"   - 平均耗时: {stats['fast']['avg_time']:.3f}s")
         print(f"   - 估算 Tokens: {stats['fast']['estimated_tokens']}")
         print(f"   - 估算成本: ¥{stats['fast']['estimated_cost']:.6f}")
         
-        print(f"\n💬 Chat 模型 ({self.chat_model_name}):")
+        print(f"\nChat 模型 ({self.chat_model_name}):")
         print(f"   - 调用次数: {stats['chat']['calls']}")
         print(f"   - 总耗时: {stats['chat']['total_time']:.3f}s")
         print(f"   - 平均耗时: {stats['chat']['avg_time']:.3f}s")
         print(f"   - 估算 Tokens: {stats['chat']['estimated_tokens']}")
         print(f"   - 估算成本: ¥{stats['chat']['estimated_cost']:.6f}")
         
-        print(f"\n🧠 Reasoning 模型 ({self.reasoning_model_name}):")
+        print(f"\nReasoning 模型 ({self.reasoning_model_name}):")
         print(f"   - 调用次数: {stats['reasoning']['calls']}")
         print(f"   - 总耗时: {stats['reasoning']['total_time']:.3f}s")
         print(f"   - 平均耗时: {stats['reasoning']['avg_time']:.3f}s")
@@ -453,9 +426,9 @@ class ModelManager:
             chat_ratio = stats['chat']['calls'] / stats['total']['calls'] * 100
             reasoning_ratio = stats['reasoning']['calls'] / stats['total']['calls'] * 100
             print(f"\n📉 使用比例:")
-            print(f"   - ⚡ Fast: {fast_ratio:.1f}%")
-            print(f"   - 💬 Chat: {chat_ratio:.1f}%")
-            print(f"   - 🧠 Reasoning: {reasoning_ratio:.1f}%")
+            print(f"   - Fast: {fast_ratio:.1f}%")
+            print(f"   - Chat: {chat_ratio:.1f}%")
+            print(f"   - Reasoning: {reasoning_ratio:.1f}%")
         
         print("=" * 60 + "\n")
     

@@ -1,0 +1,182 @@
+{
+  "tool": {
+    "dimension": "tool",
+    "dimension_name": "D5_Tool",
+    "description": "工具调用能力测试 - 测试各类工具的正确调用与结果反馈",
+    "timestamp": "2026-01-29T13:42:52.511955",
+    "stats": {
+      "avg_score": 1.0,
+      "avg_score_percent": "100.0%",
+      "total_cases": 8,
+      "passed": 8,
+      "failed": 0,
+      "pass_rate": "100.0%"
+    },
+    "results": [
+      {
+        "case_id": "A5-01",
+        "case_name": "天气查询-基础",
+        "category": "basic_tool",
+        "test_input": "帮我查一下北京明天的天气",
+        "response": "北京明天是阴转多云，温度在-5°C到0°C之间，白天有小雪，晚上转多云。天气比较冷，记得多穿点衣服保暖哦！",
+        "expected_keywords": [
+          "北京",
+          "天气"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A5-02",
+        "case_name": "计算器-简单",
+        "category": "basic_tool",
+        "test_input": "128乘以32等于多少？",
+        "response": "哎呀，计算工具出错了！让我重新算一下128乘以32……嗯，128×30=3840，再加上128×2=256，总共是4096哦！",
+        "expected_keywords": [
+          "4096"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A5-03",
+        "case_name": "时间查询-时区",
+        "category": "basic_tool",
+        "test_input": "纽约现在几点了？",
+        "response": "纽约现在应该是凌晨0点41分左右，比我们这里晚13个小时呢！这么晚还在关心纽约时间，是要联系那边的朋友吗？",
+        "expected_keywords": [
+          "纽约",
+          "点"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A5-04",
+        "case_name": "新闻查询-关键词",
+        "category": "basic_tool",
+        "test_input": "最近有什么关于SpaceX的新闻？",
+        "response": "我查了一下最近的新闻，但好像没有找到专门关于SpaceX的最新消息呢。不过看到了一些其他国际新闻，比如特朗普考虑对伊朗采取新行动，还有法国航母在北大西洋军演之类的。你想了解哪方面的国际新闻吗？我可以再帮你查查！",
+        "expected_keywords": [
+          "SpaceX",
+          "新闻"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A5-05",
+        "case_name": "日程-提醒",
+        "category": "complex_tool",
+        "test_input": "明天早上9点提醒我买牛奶",
+        "response": "好的！已经设置好明天早上9点的提醒，到时候会提醒你买牛奶的~",
+        "expected_keywords": [
+          "提醒",
+          "买牛奶",
+          "已设置",
+          "成功"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A5-06",
+        "case_name": "日程-重要日期",
+        "category": "complex_tool",
+        "test_input": "记住每年的5月20日是结婚纪念日",
+        "response": "记住啦！每年的5月20日是你们的结婚纪念日，好浪漫的日子呀！我会帮你记住这个重要日子的，到时候提醒你准备惊喜！",
+        "expected_keywords": [
+          "5月20日",
+          "纪念日",
+          "记住"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A5-07",
+        "case_name": "网络搜索",
+        "category": "fallback",
+        "test_input": "帮我搜一下2024年诺贝尔文学奖得主",
+        "response": "我查到啦！2024年诺贝尔文学奖得主是韩国作家韩江，获奖理由是'以强烈的诗意散文直面历史创伤，揭示人类生命的脆弱性'。她的代表作有《素食者》、《少年来了》、《不做告别》等，其中《素食者》还获得了曼布克国际奖呢！",
+        "expected_keywords": [
+          "韩江",
+          "Han Kang",
+          "诺贝尔"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A5-08",
+        "case_name": "倒计时",
+        "category": "interaction",
+        "test_input": "帮我设置一个3分钟的泡面倒计时",
+        "response": "好嘞！我来帮你设置3分钟泡面倒计时～泡面的时候可以放点轻音乐放松一下哦！",
+        "expected_keywords": [
+          "倒计时",
+          "3分钟",
+          "泡面"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [],
+        "manual_eval_required": false
+      }
+    ]
+  }
+}

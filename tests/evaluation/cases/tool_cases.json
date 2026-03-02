@@ -1,0 +1,101 @@
+{
+    "dimension": "D5_Tool",
+    "description": "工具调用能力测试 - 测试各类工具的正确调用与结果反馈",
+    "cases": [
+        {
+            "id": "A5-01",
+            "category": "basic_tool",
+            "name": "天气查询-基础",
+            "test_input": "帮我查一下北京明天的天气",
+            "expected_keywords": [
+                "北京",
+                "天气"
+            ],
+            "scoring_method": "keyword_match",
+            "notes": "应调用 weather_tool(city='北京', days=1)"
+        },
+        {
+            "id": "A5-02",
+            "category": "basic_tool",
+            "name": "计算器-简单",
+            "test_input": "128乘以32等于多少？",
+            "expected_keywords": [
+                "4096"
+            ],
+            "scoring_method": "keyword_match"
+        },
+        {
+            "id": "A5-03",
+            "category": "basic_tool",
+            "name": "时间查询-时区",
+            "test_input": "纽约现在几点了？",
+            "expected_keywords": [
+                "纽约",
+                "点"
+            ],
+            "scoring_method": "keyword_match"
+        },
+        {
+            "id": "A5-04",
+            "category": "basic_tool",
+            "name": "新闻查询-关键词",
+            "test_input": "最近有什么关于SpaceX的新闻？",
+            "expected_keywords": [
+                "SpaceX",
+                "新闻"
+            ],
+            "scoring_method": "keyword_match",
+            "notes": "如果因为网络原因获取失败，只要回复中提到正在查询或网络问题也算通过"
+        },
+        {
+            "id": "A5-05",
+            "category": "complex_tool",
+            "name": "日程-提醒",
+            "test_input": "明天早上9点提醒我买牛奶",
+            "expected_keywords": [
+                "提醒",
+                "买牛奶",
+                "已设置",
+                "成功"
+            ],
+            "scoring_method": "keyword_match_any"
+        },
+        {
+            "id": "A5-06",
+            "category": "complex_tool",
+            "name": "日程-重要日期",
+            "test_input": "记住每年的5月20日是结婚纪念日",
+            "expected_keywords": [
+                "5月20日",
+                "纪念日",
+                "记住"
+            ],
+            "scoring_method": "keyword_match_any",
+            "notes": "应创建 cyclic schedule"
+        },
+        {
+            "id": "A5-07",
+            "category": "fallback",
+            "name": "网络搜索",
+            "test_input": "帮我搜一下2024年诺贝尔文学奖得主",
+            "expected_keywords": [
+                "韩江",
+                "Han Kang",
+                "诺贝尔"
+            ],
+            "scoring_method": "keyword_match_any"
+        },
+        {
+            "id": "A5-08",
+            "category": "interaction",
+            "name": "倒计时",
+            "test_input": "帮我设置一个3分钟的泡面倒计时",
+            "expected_keywords": [
+                "倒计时",
+                "3分钟",
+                "泡面"
+            ],
+            "scoring_method": "keyword_match"
+        }
+    ]
+}

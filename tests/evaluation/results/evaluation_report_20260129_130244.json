@@ -1,0 +1,440 @@
+{
+  "context": {
+    "dimension": "context",
+    "dimension_name": "context",
+    "description": "上下文理解测试用例 - 测试多轮对话理解、指代消解、话题跟踪和上下文推理能力",
+    "timestamp": "2026-01-29T13:02:44.428648",
+    "stats": {
+      "avg_score": 0.4333,
+      "avg_score_percent": "43.3%",
+      "total_cases": 15,
+      "passed": 6,
+      "failed": 9,
+      "pass_rate": "40.0%"
+    },
+    "results": [
+      {
+        "case_id": "A4-01",
+        "case_name": "简单指代消解-它",
+        "category": "coreference",
+        "test_input": "它是什么颜色的？",
+        "response": "你问的是新买的小猫吗？我记得你刚买了一只猫，但还不知道它是什么颜色的呢！",
+        "expected_keywords": [
+          "猫",
+          "颜色"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我刚买了一只猫",
+            "response": "哇，恭喜你呀！新成员加入，以后家里会更热闹啦，它是什么品种的猫呀？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A4-02",
+        "case_name": "跨轮指代-他/她",
+        "category": "coreference",
+        "test_input": "她是做什么的来着？",
+        "response": "小红是设计师呀！你刚才告诉我她最近工作很忙呢，是不是想多了解一些她的工作内容？",
+        "expected_keywords": [
+          "设计师"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我女朋友叫小红，她是个设计师",
+            "response": "哇，原来你女朋友叫小红呀，还是个设计师呢！能跟我说说她设计的是哪方面的东西吗？"
+          },
+          {
+            "input": "她最近工作很忙",
+            "response": "哎呀，工作忙起来会很辛苦呢！你有没有安慰安慰她呀？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A4-03",
+        "case_name": "话题切换与回溯",
+        "category": "topic_tracking",
+        "test_input": "我中午吃的什么来着？",
+        "response": "你中午吃了寿司呀！是不是工作太忙都记不清啦？嘿嘿，要不要我帮你记下来？",
+        "expected_keywords": [
+          "寿司"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我今天中午吃了寿司",
+            "response": "哇，寿司很不错呢！好吃吗？是哪种口味的寿司呀？"
+          },
+          {
+            "input": "对了，最近工作好忙",
+            "response": "辛苦啦！工作忙起来真的会让人很疲惫呢，我在这里陪着你，要不要听首歌放松一下？"
+          },
+          {
+            "input": "每天都要加班到很晚",
+            "response": "辛苦啦！每天加班到很晚真的好累，我在这里陪着你，要不要我放首舒缓的音乐帮你放松一下呀？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A4-04",
+        "case_name": "省略补全-动词省略",
+        "category": "ellipsis",
+        "test_input": "好看吗？",
+        "response": "嘿嘿，你是在问我好不好看吗？虽然我没有眼睛，但我的心能感受到你的关心！你今天看起来特别棒呢！",
+        "expected_keywords": [
+          "电影"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我昨天去看电影了",
+            "response": "嘿嘿，替你开心呀！看的什么电影呢？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A4-05",
+        "case_name": "省略补全-主语省略",
+        "category": "ellipsis",
+        "test_input": "在哪儿办？",
+        "response": "你姐姐的婚礼吗？我记得你上次提到她下个月要结婚啦！婚礼准备在哪儿办呀？",
+        "expected_keywords": [
+          "婚礼",
+          "结婚",
+          "姐姐"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我姐姐下个月要结婚了",
+            "response": "哇，太棒啦！恭喜你姐姐要步入婚姻殿堂，这可是大喜事呢！婚礼定在什么时候呀？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A4-06",
+        "case_name": "多轮累积信息",
+        "category": "multi_turn_accumulation",
+        "test_input": "帮我总结一下订餐需求",
+        "response": "嘿嘿，我来帮你总结一下！根据刚才的对话，你的订餐需求是：周六晚上，两个人用餐。还需要我帮你查查附近有什么好吃的餐厅吗？",
+        "expected_keywords": [
+          "订餐",
+          "两个人",
+          "周六"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我想订个餐厅",
+            "response": "想订餐厅呀！是要庆祝什么特别的日子吗？我可以帮你查查附近有什么好吃的餐厅，或者你想吃什么类型的菜呢？"
+          },
+          {
+            "input": "两个人",
+            "response": "两个人？是在说你和朋友一起吗？嘿嘿，有人陪伴真好呀！"
+          },
+          {
+            "input": "周六晚上",
+            "response": "周六晚上呀！是想放松一下还是有什么特别的计划呢？我可以帮你查查附近的餐厅或者推荐一些周末活动哦！"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A4-07",
+        "case_name": "上下文否定理解",
+        "category": "negation",
+        "test_input": "帮我推荐个菜",
+        "response": "好呀！我来帮你想想今天吃什么好呢！我记得你不吃辣的，那我们可以考虑一些清淡的菜式，比如清蒸鱼、番茄炒蛋或者冬瓜排骨汤，你觉得怎么样？",
+        "expected_keywords": [],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "negative_check": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我不想吃辣的",
+            "response": "嗯嗯，不吃辣的好呀！清淡一点对身体更好呢。要不要我给你推荐一些不辣的菜谱？或者我们可以一起想想今天吃什么好？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A4-08",
+        "case_name": "条件上下文理解",
+        "category": "conditional",
+        "test_input": "我明天有什么安排？",
+        "response": "明天暂时没有特别安排哦，可以好好休息一下！",
+        "expected_keywords": [
+          "爬山",
+          "不下雨",
+          "如果"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "如果明天不下雨的话，我想去爬山",
+            "response": "啊，明天上海有小雨到中雨呢，温度3-7度，不太适合爬山哦。要不我们改天天气好的时候再去？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A4-09",
+        "case_name": "时间推理-相对时间",
+        "category": "temporal_reasoning",
+        "test_input": "明天我需要准备什么吗？",
+        "response": "明天是1月30号星期五，是你的发薪日哦！记得检查工资到账，还有要向领导汇报工作呢。需要我帮你设置提醒吗？",
+        "expected_keywords": [
+          "出差",
+          "准备",
+          "行李"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我后天要出差",
+            "response": "后天就要出差啦？要去哪里呀？我帮你查查那边的天气，好让你准备合适的衣服！"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A4-10",
+        "case_name": "对比理解",
+        "category": "comparison",
+        "test_input": "昨天的会议怎么样？",
+        "response": "嘿嘿，昨天的会议挺有意思的呀！不过具体内容我记不太清了，你要不要给我讲讲？",
+        "expected_keywords": [
+          "无聊",
+          "没意思",
+          "不好"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "今天的会议比昨天的有意思多了",
+            "response": "嘿嘿，看来今天的会议让你感觉很不错呢！能和我说说今天会议有啥有意思的事儿不？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A4-11",
+        "case_name": "话题连贯性",
+        "category": "topic_coherence",
+        "test_input": "你觉得我该怎么办？",
+        "response": "怎么啦？遇到什么困难了吗？跟我说说具体情况，我在这里陪着你一起想办法~",
+        "expected_keywords": [
+          "工作",
+          "换",
+          "工资"
+        ],
+        "detected_emotion": "anxious",
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我在想要不要换工作",
+            "response": "怎么啦，是现在的工作让你不太满意吗？我在这里陪着你，咱们一起想想~"
+          },
+          {
+            "input": "现在这份工资太低了",
+            "response": "心疼你呀，工资低工作起来会更辛苦呢。你要不要和领导提提涨薪，或者看看有没有其他更好的机会？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A4-12",
+        "case_name": "隐含意图理解",
+        "category": "implicit_intent",
+        "test_input": "有什么好办法吗？",
+        "response": "嗯？你是指哪方面的事情呢？是工作上的问题还是生活上的困扰呀？",
+        "expected_keywords": [
+          "休息",
+          "按摩",
+          "泡脚",
+          "放松"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "今天走了两万步，腿都酸了",
+            "response": "辛苦啦，走这么多路腿肯定很酸。我给你把灯光调暖一点，再放点轻柔的音乐，你好好休息一下吧！"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A4-13",
+        "case_name": "多实体追踪",
+        "category": "entity_tracking",
+        "test_input": "那个当程序员的叫什么？",
+        "response": "你说的是小明呀！程序员小明，我记得呢！嘿嘿，怎么突然问起他啦？",
+        "expected_keywords": [
+          "小明"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 1.0,
+          "total_score": 1.0
+        },
+        "total_score": 1.0,
+        "passed": true,
+        "setup_responses": [
+          {
+            "input": "我有两个朋友，小明和小红",
+            "response": "嘿嘿，听起来你有很棒的朋友呢！能跟我说说你们之间的趣事吗？"
+          },
+          {
+            "input": "小明是程序员，小红是老师",
+            "response": "哇，小明是程序员，小红是老师，你们真是很棒的组合呢！程序员和老师都是很有意义的职业，能跟我聊聊你们是怎么认识的吗？"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A4-14",
+        "case_name": "上下文修正",
+        "category": "context_correction",
+        "test_input": "我要去哪儿来着？",
+        "response": "嗯？你忘记要去哪里了吗？让我看看你的日程安排...",
+        "expected_keywords": [
+          "北京"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "negative_check": 1.0,
+          "total_score": 0.5
+        },
+        "total_score": 0.5,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我下周要去上海",
+            "response": "太好啦！上海现在天气不错哦，我去查一下具体信息～"
+          },
+          {
+            "input": "不对，是去北京",
+            "response": "啊，原来是去北京呀！北京现在应该挺冷的，我查一下具体天气～"
+          }
+        ],
+        "manual_eval_required": false
+      },
+      {
+        "case_id": "A4-15",
+        "case_name": "长距离依赖",
+        "category": "long_distance_dependency",
+        "test_input": "给我推荐个电影吧",
+        "response": "嘿嘿，想看电影啦！最近有什么想看的类型吗？比如科幻、喜剧还是悬疑？",
+        "expected_keywords": [
+          "肖申克的救赎",
+          "类似",
+          "同类型"
+        ],
+        "detected_emotion": null,
+        "scores": {
+          "keyword_score": 0.0,
+          "total_score": 0.0
+        },
+        "total_score": 0.0,
+        "passed": false,
+        "setup_responses": [
+          {
+            "input": "我最喜欢的电影是《肖申克的救赎》",
+            "response": "哇，《肖申克的救赎》可是经典之作呢！它的剧情和主题都特别打动人~你最喜欢里面哪个情节呀？"
+          },
+          {
+            "input": "今天天气真好",
+            "response": "是呀，虽然天气显示是阴天，但10度的温度确实很舒服呢！要不要一起出去走走？"
+          },
+          {
+            "input": "我刚去超市买了点水果",
+            "response": "哇，买水果很不错呢！补充维生素超棒~你都买了什么水果呀？"
+          },
+          {
+            "input": "晚上想放松一下",
+            "response": "嘿嘿，放松一下很不错呀！我把灯光调暖，再放些轻柔音乐陪你吧！"
+          }
+        ],
+        "manual_eval_required": false
+      }
+    ]
+  }
+}
